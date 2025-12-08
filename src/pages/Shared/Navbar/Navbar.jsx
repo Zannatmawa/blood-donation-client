@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router'
+import Logo from '../../../components/Logo/Logo'
 
 const Navbar = () => {
     const links = <>
@@ -10,7 +11,7 @@ const Navbar = () => {
 
     </>
     return (
-        <div className="navbar text-white bg-[#D32F2F] shadow-sm">
+        <div className="navbar text-white bg-primary shadow-sm">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -22,7 +23,9 @@ const Navbar = () => {
                         {links}
                     </ul>
                 </div>
-                <a className="btn btn-ghost text-xl">BLOOD BRIDGE</a>
+                <a className="btn btn-ghost text-xl">
+                    <Logo />
+                </a>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
