@@ -4,14 +4,14 @@ import Logo from '../../../components/Logo/Logo'
 
 const Navbar = () => {
     const links = <>
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/beAVolunteer">Be a Volunteer </NavLink>
-        <NavLink to="/dashboard">Dashboard</NavLink>
-        <NavLink to="/blood-dontaion">Donate Your Blood</NavLink>
+        <NavLink className="mr-2" to="/">Home</NavLink>
+        <NavLink className="mr-2" to="/beAVolunteer">Be a Volunteer </NavLink>
+        <NavLink className="mr-2" to="/dashboard">Dashboard</NavLink>
+        <NavLink className="mr-2" to="/blood-dontaion">Donate Your Blood</NavLink>
 
     </>
     return (
-        <div className="navbar text-white bg-primary shadow-sm">
+        <div className="navbar text-primary font-bold  bg-base-200 shadow-sm">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -33,8 +33,7 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <Link>Login</Link>
-                <a className="btn">Button</a>
+                <Link to="/login" className="btn bg-red-600 text-white">Login</Link>
             </div>
         </div>
     )
