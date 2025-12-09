@@ -1,38 +1,50 @@
 import React from 'react'
+import { useForm } from 'react-hook-form'
 import { Link } from 'react-router'
+import Logo from '../../../components/Logo/Logo';
+import useAuth from '../../../hooks/useAuth';
 
 const Login = () => {
-    return (
-        <div class="min-h-screen bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center px-4">
-            <div class="w-full max-w-md bg-white shadow-xl rounded-xl p-8 border border-red-200">
+    const { loginUser } = useAuth();
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const handleLogin = (data) => {
+        console.log(data);
+        loginUser(data.email, data.password)
+            .then(res => {
+                console.log(res.user)
+            })
+            .catch(errors => {
+                console.log(errors)
+            })
 
+    }
+    return (
+        <div class="min-h-screen bg-linear-to-br from-red-500 to-red-700 flex items-center justify-center px-4">
+            <div class="w-full max-w-md bg-white shadow-xl rounded-xl p-8 border border-red-200">
                 {/* <!-- Icon --> */}
                 <div class="flex justify-center mb-6">
                     <div class="w-16 h-16 bg-red-100 rounded-xl flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c1.657 0 3-1.567 3-3.5S13.657 4 12 4 9 5.567 9 7.5 10.343 11 12 11z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.5 21a10.4 10.4 0 0113 0M21 12l-1.5 1.5M3 12l1.5 1.5" />
-                        </svg>
+                        <Logo />
                     </div>
                 </div>
-
                 {/* <!-- Title --> */}
                 <h2 class="text-center text-2xl font-semibold text-gray-800 mb-6">
                     Log in to Blood Bridge
                 </h2>
 
                 {/* <!-- Form --> */}
-                <form class="space-y-4">
-
+                <form onSubmit={handleSubmit(handleLogin)} class="space-y-4">
                     {/* <!-- Email --> */}
                     <div>
                         <label class="text-gray-700 font-medium">Email address</label>
                         <input
                             type="email"
-                            required
+                            {...register('email', { required: true })}
                             class="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none"
                             placeholder="Enter your email"
                         />
+                        {errors.email?.type === 'required' && <p className='text-red-600'>Email is required</p>}
+
                     </div>
 
                     {/* <!-- Password --> */}
@@ -40,10 +52,15 @@ const Login = () => {
                         <label class="text-gray-700 font-medium">Password</label>
                         <input
                             type="password"
-                            required
+                            {...register('password', {
+                                required: true,
+                                minLength: 8,
+                            })}
                             class="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none"
                             placeholder="Enter your password"
                         />
+                        {errors.password?.type === 'required' && <p className='text-red-600'>Password is required</p>}
+                        {errors.password?.type === 'minLength' && <p className='text-red-600'>Password must be 6 character!</p>}
                     </div>
 
                     {/* <!-- Remember --> */}

@@ -10,6 +10,9 @@ const AuthProvider = ({ children }) => {
     const loginUser = (email, password) => {
         return signInWithEmailAndPassword(email, password);
     }
+
+    //observer the user
+
     const authInfo = {
         registerUser,
         loginUser,
