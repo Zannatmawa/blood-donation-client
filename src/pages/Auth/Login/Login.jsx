@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router'
 
 const Login = () => {
     return (
@@ -67,20 +68,18 @@ const Login = () => {
                     </div>
 
                     {/* <!-- Secondary buttons --> */}
-                    <button class="w-full border border-red-300 py-2 rounded-lg hover:bg-red-50 transition">
+                    {/* <button class="w-full border border-red-300 py-2 rounded-lg hover:bg-red-50 transition">
                         Log in with passkey
-                    </button>
+                    </button> */}
 
-                    <button class="w-full border border-red-300 py-2 rounded-lg hover:bg-red-50 transition">
-                        Use single sign-on
-                    </button>
+
 
                 </form>
 
                 {/* <!-- Footer --> */}
                 <p class="text-center text-gray-600 text-sm mt-6">
                     New to Blood Bridge?
-                    <a href="#" class="text-red-600 font-semibold hover:underline">Create account</a>
+                    <Link to="/register" class="text-red-600 font-semibold hover:underline">Create account</Link>
                 </p>
 
             </div>
