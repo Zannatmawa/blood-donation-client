@@ -25,11 +25,11 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'beADonor',
-                element: <PrivateRoute><Donor /></PrivateRoute>
+                element: <Donor />
             },
             {
                 path: 'pending-donation-requests',
-                element: <PrivateRoute><PendingDontaionRequest /></PrivateRoute>
+                element: <PendingDontaionRequest />
             }
         ]
     },
@@ -44,6 +44,7 @@ export const router = createBrowserRouter([
             {
                 path: '/register',
                 Component: Register,
+                loader: () => fetch('/districts.json').then(res => res.json())
             }
         ]
     },

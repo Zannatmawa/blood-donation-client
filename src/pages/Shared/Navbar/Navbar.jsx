@@ -5,9 +5,11 @@ import useAuth from '../../../hooks/useAuth'
 //mawa@gmail.com
 const Navbar = () => {
     const { user, logOut } = useAuth();
-    console.log(user)
+    console.log(user);
     const navigate = useNavigate();
 
+    const allUpazilas = fetch('/public/upazilla.json').then(res => res.json())
+    console.log(allUpazilas)
     const handleLogOut = () => {
         logOut()
             .then(res => {
@@ -54,7 +56,7 @@ const Navbar = () => {
                             <NavLink className="m-5" to="/dashboard">Dashboard</NavLink>
                             <Link onClick={handleLogOut} className="btn bg-red-600 text-white">Logout</Link>                        </ul>
                     </div>
-                    <Link to="/beADonor" className="btn bg-red-600 text-white">Be A donor</Link>
+                    <Link allUpazilas={allUpazilas} to="/register" className="btn bg-red-600 text-white">Be A donor</Link>
 
                 </>
                     : <Link to="/login" className="btn bg-red-600 text-white">Login</Link>

@@ -8,7 +8,7 @@ import {
     LogOut,
     Menu
 } from "lucide-react";
-import { Link } from "react-router";
+import { Link, Outlet } from "react-router";
 import MyProfile from "../pages/Dashboard/MyProfile/MyProfile";
 import useAuth from "../hooks/useAuth";
 
@@ -44,12 +44,16 @@ export default function Sidebar() {
 
                     <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
                         <User size={20} /> <span className={open ? "block" : "hidden"}><Link to='/dashboard/my-profile'>My Profile</Link></span>
-                    </li>
+                    </li>                     {/*everyone  */}
+                    <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
+                        <User size={20} /> <span className={open ? "block" : "hidden"}><Link to='/dashboard/my-profile'>All users Info</Link></span>
+                    </li>  {/* //for admin only */}
 
                     <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
                         <HeartPulse size={20} />
-                        <span className={open ? "block" : "hidden"}>Blood Requests</span>
+                        <span className={open ? "block" : "hidden"}>All Blood Donation Requests</span>
                     </li>
+                    {/* //for admin and vol */}
 
                     <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
                         <ClipboardList size={20} />
@@ -76,7 +80,7 @@ export default function Sidebar() {
             {/* Dashboard Content Area */}
             <div className="flex-1 p-8 bg-gray-100">
                 <h1 className="text-3xl font-semibold">Welcome {user.displayName} !</h1>
-                <MyProfile />
+                <Outlet></Outlet>
             </div>
 
         </div>
