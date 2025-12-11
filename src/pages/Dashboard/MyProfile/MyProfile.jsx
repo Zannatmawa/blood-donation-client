@@ -1,146 +1,129 @@
-import React, { use } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 // import { useLoaderData, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 import useAuth from '../../../hooks/useAuth';
+import { useLoaderData } from 'react-router';
 // import useAxios from '../../hooks/useAxios';
 
 const MyProfile = () => {
     const { register, handleSubmit, control, formState: { errors } } = useForm();
-    // // const axios = useAxios();
     const { user } = useAuth();
-    // // const navigate = useNavigate();
-    // console.log(user)
-    // const serviceCenters = useLoaderData();
-    // const regionsDuplicate = serviceCenters.map(c => c.region);
-    // const regions = [...new Set(regionsDuplicate)];
-    // //call useMemo useCallBack
-    // const senderRegion = useWatch({ control, name: 'senderRegion' })
-    // const receiverRegion = useWatch({ control, name: 'receiverRegion' })
 
-    // const districtByRegion = region => {
-    //     const regionDistricts = serviceCenters.filter(c => c.region === region);
-    //     const districts = regionDistricts.map(d => d.district);
-    //     return districts;
-    // }
+    const allDistricts = useLoaderData();
+    const districts = allDistricts[0].data;
 
+    const [districtId, setDistrictId] = useState("");
+    const [upazillas, setUpazillas] = useState([]);
+
+    useEffect(() => {
+        fetch('/upazilla.json')
+            .then(res => res.json())
+            .then(data => {
+                setUpazillas(data[0].data)
+            });
+    }, []);
+    const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
     return (
-        <div>
-            <h2 className='text-5xl font-bold'>Send A Parcel</h2>
-            <form onSubmit={handleSubmit()}
-                className='mt-12 p-4'>
-                {/* parcel type */}
+        <div className="max-w-3xl mx-auto p-6 shadow rounded bg-white">
+            <h2 className="text-4xl font-bold text-center mb-6">My Profile</h2>
+
+            {/* Avatar Preview */}
+            <div className="flex justify-center mb-6">
+                <img
+                    src={user?.photoURL || "https://i.ibb.co/Y2q5FJr/default-avatar.png"}
+                    alt="Avatar"
+                    defaultValue={user?.photoURL}
+                    className="w-24 h-24 rounded-full border"
+                />
+            </div>
+            <button className="btn btn-primary  text-black">
+                Edit
+            </button>
+            <form onSubmit={handleSubmit()} className="space-y-6">
+                {/* Full Name */}
                 <div>
-                    <label className='label'><input
-                        type='radio'
-                        {...register('parcelType')}
-                        value="document"
-                        name="radio-1"
-                        className='radio'
-                        defaultChecked />Document
-                    </label>
-                    <label className='label'><input
-                        type='radio'
-                        {...register('parcelType')}
-                        value="non-document"
-                        name="radio-1"
-                        className='radio'
-                        defaultChecked />Non-Document
-                    </label>
+                    <label className="label font-semibold">Full Name</label>
+                    <input
+                        type="text"
+                        defaultValue={user?.displayName}
+                        {...register("name")}
+                        className="input w-full border p-2 rounded"
+                        placeholder="Your Name"
+                    />
                 </div>
-                {/* parcel */}
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-12 my-8'>
-                    <fieldset className="fieldset">
-                        <label className="label">Parcel name</label>
-                        <input type="text" {...register('parcelName')}
-                            className="input w-full" placeholder="Parcel Name" />
-                    </fieldset>
-                    <fieldset className="fieldset">
-                        <label className="label">Parcel weight(kg)</label>
-                        <input type="number" {...register('parcelWeight')}
-                            className="input w-full" placeholder="Parcel Weight" />
-                    </fieldset>
-                </div>
-                {/* two col */}
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
-                    {/* Sender */}
-                    <fieldset className="fieldset">
-                        <h4 className='text-2xl font-semibold'>Sender Details</h4>
-                        <label className="label">Sender name</label>
-                        <input type="text"
-                            {...register('senderName')}
-                            defaultValue={user?.displayName}
-                            className="input w-full" placeholder="Sender name" />
-                        {/* email */}
-                        <label className="label">Sender Email</label>
-                        <input type="text"
-                            {...register('senderEmail')}
-                            defaultValue={user?.email}
-                            className="input w-full" placeholder="Sender Email" />
-                        {/* options */}
-                        {/* sender regions */}
-                        {/* <fieldset className="fieldset">
-                            <legend className="fieldset-legend">Select a Region</legend>
-                            <select {...register('senderRegion')} defaultValue="Pick a browser" className="select">
-                                <option disabled={true}>Pick a region</option>
-                                {regions.map((region, i) => <option key={i} value={region}>{region}</option>)}
-                            </select>
-                            <span className="label">Optional</span>
-                        </fieldset> */}
-                        {/* sender districts */}
-                        {/* <fieldset className="fieldset">
-                            <legend className="fieldset-legend">Select a District </legend>
-                            <select {...register('senderDistrict')} defaultValue="Pick a browser" className="select">
-                                <option disabled={true}>Pick a District</option>
-                                {districtByRegion(senderRegion).map((region, i) => <option key={i} value={region}>{region}</option>)}
 
-                            </select>
-                            <span className="label">Optional</span>
-                        </fieldset> */}
-                        {/* address */}
-                        <label className="label mt-4">Sender Address</label>
-                        <input type="text" {...register('senderAddress')}
-                            className="input w-full" placeholder="Sender Address" />
-                        {/* district */}
-                        <label className="label mt-4">Sender District</label>
-                        <input type="text" {...register('senderDistrict')}
-                            className="input w-full" placeholder="Sender District" />
-                    </fieldset>
-                    {/* receiver */}
-                    <fieldset className="fieldset">
-                        <h4 className='text-2xl font-semibold'>Receiver Details</h4>
-                        <label className="label">Receiver name</label>
-                        <input type="text" {...register('receiverName')}
-                            className="input w-full" placeholder="Receiver name" />
-                        {/* email */}
-                        <label className="label">Receiver Email</label>
-                        <input type="text" {...register('receiverEmail')}
-                            className="input w-full" placeholder="Receiver Email" />
-                        {/* Receiver regions */}
-                        {/* <fieldset className="fieldset">
-                            <legend className="fieldset-legend">Select a Region</legend>
-                            <select {...register('receiverRegion')} defaultValue="Pick a Region" className="select">
-                                <option disabled={true}>Pick a region</option>
-                                {regions.map((region, i) => <option key={i} value={region}>{region}</option>)}
-                            </select>
-                        </fieldset> */}
-                        {/* Receiver disctrics  */}
-                        {/* <fieldset className="fieldset">
-                            <legend className="fieldset-legend">Select a District</legend>
-                            <select {...register('receiverDistrict')} defaultValue="Pick a District" className="select">
-                                <option disabled={true}>Pick a region</option>
-                                {districtByRegion(receiverRegion).map((d, i) => <option key={i} value={d}>{d}</option>)}
-                            </select>
-                        </fieldset> */}
-                        {/* address */}
-                        <label className="label mt-4">Receiver Address</label>
-                        <input type="text" {...register('receiverAddress')}
-                            className="input w-full" placeholder="Receiver Address" />
-
-                    </fieldset>
+                {/* Email */}
+                <div>
+                    <label className="label font-semibold">Email</label>
+                    <input
+                        type="email"
+                        defaultValue={user?.email}
+                        {...register("email")}
+                        className="input w-full border p-2 rounded"
+                        placeholder="Your Email"
+                        readOnly
+                    />
+                    <p className="text-sm text-gray-500">Email cannot be changed</p>
                 </div>
-                <button type='submit' className='btn btn-primary text-black' value="Send Parcel" >Submit</button>
+
+                {/* Avatar URL */}
+                <div>
+                    <label class="text-gray-700 font-medium">Photo</label>
+                    <input
+                        type="file"
+
+                        {...register('photo', { required: true })}
+                        class="file-input w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none"
+                    />
+                    {errors.photo?.type === 'required' && <p className='text-red-600'>Photo is required</p>}
+                </div>
+                {/* blood grp */}
+                <fieldset className="fieldset">
+                    <label class="text-gray-700 font-medium">Blood Group</label>
+                    <select
+                        name="bloodGroup"
+                        className="select select-bordered w-full"
+                        {...register('blood', { required: true })}
+                    >
+                        <option value="">Select Blood Group</option>
+                        {bloodGroups.map(bg => (
+                            <option key={bg} value={bg}>{bg}</option>
+                        ))}
+                    </select>
+                </fieldset>
+                {/* District */}
+
+                <fieldset className="fieldset">
+                    <legend className="fieldset-legend ">Select a District </legend>
+                    <select {...register('district')} onChange={(e) => setDistrictId(e.target.value)} defaultValue="" className="select w-full ">
+                        <option value="" disabled>Pick a District</option>
+                        {districts.map(d => (
+                            <option key={d.id} value={d.id}>
+                                {d.name}
+                            </option>
+                        ))}
+                    </select>
+                </fieldset>
+                {/* Upazila */}
+                <fieldset className="fieldset">
+                    <legend className="fieldset-legend">Select a Upazilla</legend>
+                    <select {...register('upazilla')} defaultValue="" className="select w-full">
+                        <option value="" disabled>Pick a Upazilla</option>
+                        {upazillas
+                            .filter(u => u.district_id == districtId)
+                            .map(u => (
+                                <option key={u.id} value={u.name}>{u.name}</option>
+                            ))
+                        }
+                    </select>
+                </fieldset>
+                {/* Submit */}
+
+                <button className="btn bg-green-600  text-black">
+                    Save
+                </button>
             </form>
         </div>
     )

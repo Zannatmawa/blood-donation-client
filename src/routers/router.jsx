@@ -56,7 +56,8 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: 'my-profile',
-                Component: MyProfile
+                Component: MyProfile,
+                loader: () => fetch('/districts.json').then(res => res.json())
             },
             {
                 path: 'create-donation-req',
