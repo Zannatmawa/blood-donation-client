@@ -1,17 +1,21 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router'
+import { Link, useLocation, useNavigate } from 'react-router'
 import Logo from '../../../components/Logo/Logo';
 import useAuth from '../../../hooks/useAuth';
-
+//@Marufa362 @Marufa362
+//marufa@gmail.com
 const Login = () => {
     const { loginUser } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const handleLogin = (data) => {
         console.log(data);
         loginUser(data.email, data.password)
             .then(res => {
-                console.log(res.user)
+                navigate(location?.state || '/');
+                console.log(res.user);
             })
             .catch(errors => {
                 console.log(errors)
@@ -72,8 +76,7 @@ const Login = () => {
                     {/* <!-- Login Button --> */}
                     <button
                         type="submit"
-                        class="w-full bg-red-600 text-white py-2 rounded-lg font-semibold hover:bg-red-700 transition"
-                    >
+                        class="w-full bg-red-600 text-white py-2 rounded-lg font-semibold hover:bg-red-700 transition">
                         Continue
                     </button>
 
@@ -83,20 +86,12 @@ const Login = () => {
                         <span class="px-3 text-gray-500 text-sm">or</span>
                         <div class="flex-1 border-t border-gray-300"></div>
                     </div>
-
-                    {/* <!-- Secondary buttons --> */}
-                    {/* <button class="w-full border border-red-300 py-2 rounded-lg hover:bg-red-50 transition">
-                        Log in with passkey
-                    </button> */}
-
-
-
                 </form>
 
                 {/* <!-- Footer --> */}
                 <p class="text-center text-gray-600 text-sm mt-6">
                     New to Blood Bridge?
-                    <Link to="/register" class="text-red-600 font-semibold hover:underline">Create account</Link>
+                    <Link state={location.state} to="/register" class="text-red-600 font-semibold hover:underline">Create account</Link>
                 </p>
 
             </div>

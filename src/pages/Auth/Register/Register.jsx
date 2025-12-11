@@ -1,15 +1,42 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import useAuth from '../../../hooks/useAuth'
+import axios from 'axios';
+import { Link, useLocation, useNavigate } from 'react-router';
 
 const Register = () => {
-    const { registerUser } = useAuth();
+    const { registerUser, updateUserProfile } = useAuth();
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const location = useLocation();
+    const navigate = useNavigate();
+    // const bloodGroup = ["A+", "A-", "B+", "B-", "AB+", "AB-", O +, O -]
     const handleRegistration = (data) => {
         console.log(data);
+        const profileImg = data.photo[0];
+
         registerUser(data.email, data.password)
             .then(res => {
                 console.log(res.user)
+                //store the image and get the url from img bb
+                const formData = new FormData();
+                formData.append('image', profileImg);
+                //send the photo to store
+                const image_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host}`
+                axios.post(image_URL, formData)
+                    .then(res => {
+                        console.log(res.data);
+                        //update user profile to firebase
+                        const userProfile = {
+                            displayName: data.name,
+                            photoURL: res.data.data.url
+                        }
+                        updateUserProfile(userProfile)
+                            .then()
+                            .catch(error => {
+                                console.log(error);
+                                navigate(location.state || '/');
+                            })
+                    })
             })
             .catch(error => {
                 console.log(error)
@@ -61,16 +88,45 @@ const Register = () => {
                     <div>
                         <label class="text-gray-700 font-medium">Photo</label>
                         <input
-                            type="text"
-                            required
-                            class="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none"
+                            type="file"
+                            {...register('photo',
+                                { required: true })}
+                            class="file-input w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none"
                             placeholder="Enter your Photo Url"
                         />
+                        {errors.photo?.type === 'required' && <p className='text-red-600'>Photo is required</p>}
+
                     </div>
-                    {/* blood group */}
+                    {/* options */}
                     {/* distric */}
+                    <fieldset className="fieldset">
+                        <legend className="fieldset-legend">Select a District </legend>
+                        {/* <select {...register('senderDistrict')} defaultValue="Pick a browser" className="select">
+                            <option disabled={true}>Pick a District</option>
+                            {districtByRegion(senderRegion).map((region, i) => <option key={i} value={region}>{region}</option>)}
+
+                        </select> */}
+                        <span className="label">Optional</span>
+                    </fieldset>
                     {/* region/upazila */}
-                    {/* confirm pass */}
+                    <fieldset className="fieldset">
+                        <legend className="fieldset-legend">Select a Region</legend>
+                        {/* <select {...register('senderRegion')} defaultValue="Pick a browser" className="select">
+                            <option disabled={true}>Pick a region</option>
+                            {regions.map((region, i) => <option key={i} value={region}>{region}</option>)}
+                        </select> */}
+                        <span className="label">Optional</span>
+                    </fieldset>
+
+                    {/* blood group */}
+                    {/* <fieldset className="fieldset">
+                        <legend className="fieldset-legend">Select a Blood Group</legend>
+                        <select {...register('senderRegion')} defaultValue="Pick a Blood Group" className="select">
+                            <option disabled={true}>Pick a region</option>
+                            {bloodGroup.map((group, i) => <option key={i} value={group}>{group}</option>)}
+                        </select>
+                        <span className="label">Optional</span>
+                    </fieldset> */}
                     {/* <!-- Password --> */}
                     <div>
                         <label class="text-gray-700 font-medium">Password</label>
@@ -90,6 +146,20 @@ const Register = () => {
                         {errors.password?.type === 'pattern' && <p className='text-red-500'>must contain at least one uppercase letter. Must contain at least one lowercase letter!</p>}
 
                     </div>
+                    {/* confirm pass */}
+                    <label class="text-gray-700 font-medium">Confirm Password</label>
+                    <input
+                        type="password"
+                        {...register('password', {
+                            required: true,
+                            minLength: 8,
+                            pattern: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+
+                        })}
+                        class="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none"
+                        placeholder="Enter your password"
+                    />
+
 
                     {/* <!-- Remember --> */}
                     <div class="flex items-center gap-2">
@@ -111,22 +181,12 @@ const Register = () => {
                         <span class="px-3 text-gray-500 text-sm">or</span>
                         <div class="flex-1 border-t border-gray-300"></div>
                     </div>
-
-                    {/* <!-- Secondary buttons --> */}
-                    <button class="w-full border border-red-300 py-2 rounded-lg hover:bg-red-50 transition">
-                        Log in with passkey
-                    </button>
-
-                    <button class="w-full border border-red-300 py-2 rounded-lg hover:bg-red-50 transition">
-                        Use single sign-on
-                    </button>
-
                 </form>
 
                 {/* <!-- Footer --> */}
                 <p class="text-center text-gray-600 text-sm mt-6">
-                    New to Blood Bridge?
-                    <a href="#" class="text-red-600 font-semibold hover:underline">Create account</a>
+                    Alreay registered to Blood Bridge?
+                    <Link state={location.state} to="/login" class="text-red-600 font-semibold hover:underline">Login</Link>
                 </p>
 
             </div>

@@ -5,17 +5,19 @@ import { getAuth } from "firebase/auth";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+
+
 const firebaseConfig = {
-
-
-    VITE_apiKey: import.meta.env.VITE_apiKey,
-    VITE_authDomain: import.meta.env.VITE_authDomain,
-    VITE_projectId: import.meta.env.VITE_projectId,
-    VITE_storageBucket: import.meta.env.VITE_storageBucket,
-    VITE_messagingSenderId: import.meta.env.VITE_messagingSenderId,
-    VITE_appId: import.meta.env.VITE_appId
+    apiKey: import.meta.env.VITE_apiKey,
+    authDomain: import.meta.env.VITE_authDomain,
+    projectId: import.meta.env.VITE_projectId,
+    storageBucket: import.meta.env.VITE_storageBucket,
+    messagingSenderId: import.meta.env.VITE_messagingSenderId,
+    appId: import.meta.env.VITE_appId
 };
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth();
+//@Marufa362
+//marufa@gmail.com

@@ -1,14 +1,27 @@
 import React from 'react'
-import { Link, NavLink } from 'react-router'
+import { Link, NavLink, useNavigate } from 'react-router'
 import Logo from '../../../components/Logo/Logo'
-
+import useAuth from '../../../hooks/useAuth'
+//mawa@gmail.com
 const Navbar = () => {
-    const links = <>
-        <NavLink className="mr-2" to="/">Home</NavLink>
-        <NavLink className="mr-2" to="/beAVolunteer">Be a Volunteer </NavLink>
-        <NavLink className="mr-2" to="/dashboard">Dashboard</NavLink>
-        <NavLink className="mr-2" to="/blood-dontaion">Donate Your Blood</NavLink>
+    const { user, logOut } = useAuth();
+    console.log(user)
+    const navigate = useNavigate();
 
+    const handleLogOut = () => {
+        logOut()
+            .then(res => {
+                console.log(res);
+                navigate('/login')
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+    const links = <>
+        <NavLink className="mr-5" to="/">Home</NavLink>
+        <NavLink className="mr-5" to="/donation-requests">Donate Your Blood</NavLink>
+        <NavLink className="mr-5" to="/funding">Funding</NavLink>
     </>
     return (
         <div className="navbar text-primary font-bold  bg-base-200 shadow-sm">
@@ -33,7 +46,20 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <Link to="/login" className="btn bg-red-600 text-white">Login</Link>
+
+                {user ? <>
+                    <div className="dropdown dropdown-bottom dropdown-end">
+                        <img tabIndex={0} role="button" className='w-8 h-8  mr-5 rounded-full' src={user.photoURL} alt="" />
+                        <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                            <NavLink className="m-5" to="/dashboard">Dashboard</NavLink>
+                            <Link onClick={handleLogOut} className="btn bg-red-600 text-white">Logout</Link>                        </ul>
+                    </div>
+                    <Link to="/beADonor" className="btn bg-red-600 text-white">Be A donor</Link>
+
+                </>
+                    : <Link to="/login" className="btn bg-red-600 text-white">Login</Link>
+
+                }
             </div>
         </div>
     )
