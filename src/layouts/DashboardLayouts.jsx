@@ -41,17 +41,23 @@ export default function Sidebar() {
                     <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
                         <Home size={20} /> <span className={open ? "block" : "hidden"}>Dashboard</span>
                     </li>
-
+                    {/*everyone  */}
                     <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
                         <User size={20} /> <span className={open ? "block" : "hidden"}><Link to='/dashboard/my-profile'>My Profile</Link></span>
-                    </li>                     {/*everyone  */}
+                    </li>
                     <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
-                        <User size={20} /> <span className={open ? "block" : "hidden"}><Link to='/dashboard/my-profile'>All users Info</Link></span>
+                        <User size={20} /> <span className={open ? "block" : "hidden"}><Link to='/dashboard/create-donation-req'>Create Donation request</Link></span>
+                    </li>
+                    <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
+                        <User size={20} /> <span className={open ? "block" : "hidden"}><Link to='/dashboard/my-dontaion-req'>My Donation request</Link></span>
+                    </li>
+                    <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
+                        <User size={20} /> <span className={open ? "block" : "hidden"}><Link to='/dashboard/all-users-info'>All users Info</Link></span>
                     </li>  {/* //for admin only */}
 
                     <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
                         <HeartPulse size={20} />
-                        <span className={open ? "block" : "hidden"}>All Blood Donation Requests</span>
+                        <span className={open ? "block" : "hidden"}><Link to='/dashboard/all-donation-req'>All Blood Donation Requests</Link></span>
                     </li>
                     {/* //for admin and vol */}
 

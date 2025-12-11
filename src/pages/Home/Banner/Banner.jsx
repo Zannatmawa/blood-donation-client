@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router'
 
 const Banner = () => {
     return (
@@ -18,13 +19,8 @@ const Banner = () => {
 
                     {/* CTA Buttons */}
                     <div className="mt-8 flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center md:justify-start">
-                        <a href="#donor-register" className="px-8 py-3 bg-red-600 text-white rounded-lg font-semibold shadow-md hover:bg-red-700 transition">
-                            Become a Donor
-                        </a>
-
-                        <a href="#request-blood" className="px-8 py-3 border border-red-600 text-red-600 rounded-lg font-semibold hover:bg-red-50 transition">
-                            Request Blood
-                        </a>
+                        <Link to="/register" className="px-8 py-3 bg-red-600 text-white rounded-lg font-semibold shadow-md hover:bg-red-700 transition">Join as a donor</Link>
+                        <Link to="/register" className="px-8 py-3 bg-red-600 text-white rounded-lg font-semibold shadow-md hover:bg-red-700 transition">Search Donors</Link>
                     </div>
 
                     {/* Stats */}

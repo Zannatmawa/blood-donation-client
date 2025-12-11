@@ -7,10 +7,12 @@ import Register from "../pages/Auth/Register/Register";
 import PrivateRoute from "./PrivateRoute";
 import Donor from "../pages/Donor/Donor";
 import DashboardLayouts from "../layouts/DashboardLayouts";
-import createDontaionRequest from "../pages/Dashboard/createDontaionRequest/createDontaionRequest";
 import MyDontationRequest from "../pages/Dashboard/MyDontationRequest/MyDontationRequest";
 import MyProfile from "../pages/Dashboard/MyProfile/MyProfile";
 import PendingDontaionRequest from "../pages/PendingDontaionRequest/PendingDontaionRequest";
+import AllDonationRequest from "../pages/Dashboard/AllDonationRequest/AllDonationRequest";
+import AllUsersInfo from "../pages/Dashboard/AllUsersInfo/AllUsersInfo";
+import CreateDonationRequest from "../pages/Dashboard/CreateDonationRequest/CreateDonationRequest";
 
 
 
@@ -53,16 +55,26 @@ export const router = createBrowserRouter([
         element: <PrivateRoute><DashboardLayouts /></PrivateRoute>,
         children: [
             {
-                path: 'create-dontaion-req',
-                Component: createDontaionRequest
+                path: 'my-profile',
+                Component: MyProfile
+            },
+            {
+                path: 'create-donation-req',
+                Component: CreateDonationRequest,
+                loader: () => fetch('/districts.json').then(res => res.json())
+
             },
             {
                 path: 'my-dontaion-req',
                 Component: MyDontationRequest
             },
             {
-                path: 'my-profile',
-                Component: MyProfile
+                path: 'all-donation-req',
+                Component: AllDonationRequest
+            },
+            {
+                path: 'all-users-info',
+                Component: AllUsersInfo
             },
         ]
     }

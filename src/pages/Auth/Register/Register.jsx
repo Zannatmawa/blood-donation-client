@@ -3,8 +3,10 @@ import { useForm } from 'react-hook-form'
 import useAuth from '../../../hooks/useAuth'
 import axios from 'axios';
 import { Link, useLoaderData, useLocation, useNavigate } from 'react-router';
-
+import useAxios from '../../../hooks/useAxios';
+//@Saima362 @Namm362 na@gmail.com
 const Register = () => {
+    const axiosSecure = useAxios();
     const { registerUser, updateUserProfile } = useAuth();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const location = useLocation();
@@ -26,29 +28,50 @@ const Register = () => {
     const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
     const handleRegistration = (data) => {
-        const profileImg = data.photo[0];
-
+        const profileImg = data.photo[0]
         registerUser(data.email, data.password)
             .then(res => {
+                //store the ig and get the photo url         
                 const formData = new FormData();
                 formData.append('image', profileImg);
-                const image_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host}`
-                axios.post(image_URL, formData)
+                const imageAPIURL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host}`
+                axios.post(imageAPIURL, formData)
                     .then(res => {
+                        // const photoURL = res.data.data.url;
+                        //create user int the db
+                        const userInfo = {
+                            email: data.email,
+                            displayName: data.name,
+                            photoURL: res.data.data.url,
+                            bloodGroup: data.blood,
+                            district: data.district,
+                            upazilla: data.upazilla,
+                        }
+                        axiosSecure.post('/all-users', userInfo)
+                            .then(res => {
+                                if (res.data.insertedId) {
+                                    console.log('first')
+                                }
+                            })
+                        //update user profile
                         const userProfile = {
                             displayName: data.name,
-                            photoURL: res.data.data.url
+                            photoURL: res.data.data.url,
                         }
                         updateUserProfile(userProfile)
-                            .then()
-                            .catch(error => {
-                                navigate(location.state || '/');
+                            .then(() => {
+                                console.log('first');
+                                navigate(location.state || '/')
+                            })
+                            .catch(err => {
+                                console.log(err)
                             })
                     })
             })
-            .catch(error => {
-                console.log(error)
+            .catch(err => {
+                console.log(err)
             })
+
     }
 
     return (
@@ -68,7 +91,6 @@ const Register = () => {
                 </h2>
 
                 <form onSubmit={handleSubmit(handleRegistration)} class="space-y-4">
-
                     <div>
                         <label class="text-gray-700 font-medium">Email address</label>
                         <input
@@ -79,7 +101,7 @@ const Register = () => {
                         />
                         {errors.email?.type === 'required' && <p className='text-red-600'>Email is required</p>}
                     </div>
-
+                    {/* name */}
                     <div>
                         <label class="text-gray-700 font-medium">Full Name</label>
                         <input
@@ -102,11 +124,10 @@ const Register = () => {
                     {/* blood grp */}
                     <fieldset className="fieldset">
                         <label class="text-gray-700 font-medium">Blood Group</label>
-
                         <select
                             name="bloodGroup"
                             className="select select-bordered w-full"
-                            required
+                            {...register('blood', { required: true })}
                         >
                             <option value="">Select Blood Group</option>
                             {bloodGroups.map(bg => (
