@@ -20,7 +20,7 @@ const Navbar = () => {
     }
     const links = <>
         <NavLink className="mr-5" to="/">Home</NavLink>
-        <NavLink className="mr-5" to="/donation-requests">Donate Your Blood</NavLink>
+        <NavLink className="mr-5" to="/pending-donation-requests">BLood Donation Requests</NavLink>
         <NavLink className="mr-5" to="/funding">Funding</NavLink>
     </>
     return (

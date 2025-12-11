@@ -10,6 +10,7 @@ import DashboardLayouts from "../layouts/DashboardLayouts";
 import createDontaionRequest from "../pages/Dashboard/createDontaionRequest/createDontaionRequest";
 import MyDontationRequest from "../pages/Dashboard/MyDontationRequest/MyDontationRequest";
 import MyProfile from "../pages/Dashboard/MyProfile/MyProfile";
+import PendingDontaionRequest from "../pages/PendingDontaionRequest/PendingDontaionRequest";
 
 
 
@@ -27,8 +28,8 @@ export const router = createBrowserRouter([
                 element: <PrivateRoute><Donor /></PrivateRoute>
             },
             {
-                path: 'donation-requests',
-                element: <PrivateRoute><Donor /></PrivateRoute>
+                path: 'pending-donation-requests',
+                element: <PrivateRoute><PendingDontaionRequest /></PrivateRoute>
             }
         ]
     },
