@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import useAuth from '../../../hooks/useAuth';
 import useAxios from '../../../hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
+import { MdBlock } from "react-icons/md";
 
 const AllUsersInfo = () => {
     const { user } = useAuth();
+    const { status, setStatus } = useState()
     const axiosSecure = useAxios();
     const { data: allUsersInfo = [] } = useQuery({
         queryKey: ['myDonationRequest', user?.email],
@@ -14,6 +16,9 @@ const AllUsersInfo = () => {
             return res.data;
         }
     })
+    const handleBlock = () => {
+
+    }
     return (
         <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
             <h2>All users:{allUsersInfo.length}</h2>
@@ -49,9 +54,11 @@ const AllUsersInfo = () => {
                                     <td>{user.email}</td>
                                     <td>{user.displayName}</td>
                                     <td>{user.role}</td>
-                                    <td>{user.status}</td>
+                                    <td className=' text-green-600 font-bold '>{user.status}</td>
                                     <th>
-                                        <button className="btn btn-ghost btn-xs">details</button>
+                                        <button onClick={handleBlock} className="btn btn-ghost text-white btn-sm bg-red-600">
+                                            <MdBlock />
+                                        </button>
                                     </th>
                                 </tr>
                             )

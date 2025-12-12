@@ -33,11 +33,12 @@ const Register = () => {
             .then(res => {
                 //store the ig and get the photo url         
                 const formData = new FormData();
+                console.log(formData)
                 formData.append('image', profileImg);
                 const imageAPIURL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host}`
                 axios.post(imageAPIURL, formData)
                     .then(res => {
-                        // const photoURL = res.data.data.url;
+                        const photoURL = res.data.data.url;
                         //create user int the db
                         const userInfo = {
                             email: data.email,
