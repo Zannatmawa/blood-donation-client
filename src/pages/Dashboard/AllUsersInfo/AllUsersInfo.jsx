@@ -12,7 +12,7 @@ const AllUsersInfo = () => {
     const { user } = useAuth();
     const { status, setStatus } = useState()
     const axiosSecure = useAxios();
-    const { data: allUsersInfo = [] } = useQuery({
+    const { refetch, data: allUsersInfo = [] } = useQuery({
         queryKey: ['myDonationRequest', user?.email],
         queryFn: async () => {
             //http://localhost:3000/my-donation-req/
@@ -24,12 +24,28 @@ const AllUsersInfo = () => {
         const statusInfo = { status: 'blocked' }
         axiosSecure.patch(`/all-users/${user._id}`, statusInfo)
             .then(res => {
-                console.log(res.data)
                 if (res.data.modifiedCount) {
+                    refetch();
                     Swal.fire({
                         position: 'top-end',
                         icon: "success",
                         title: `donor marked as blocked`,
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+            })
+    }
+    const handleRemoveBlock = (user) => {
+        const statusInfo = { status: 'active' }
+        axiosSecure.patch(`/all-users/${user._id}`, statusInfo)
+            .then(res => {
+                if (res.data.modifiedCount) {
+                    refetch();
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: "success",
+                        title: `donor marked as active`,
                         showConfirmButton: false,
                         timer: 2000
                     });
@@ -71,11 +87,14 @@ const AllUsersInfo = () => {
                                     <td>{user.email}</td>
                                     <td>{user.displayName}</td>
                                     <td>{user.role}</td>
-                                    <td className=' text-green-600 font-bold '>{user.status}</td>
+                                    <td className={`${user.status === 'blocked' ? "text-red-600 font-bold " : " text-green-600 font-bold "}`}>{user.status}</td>
                                     <th>
-                                        {user.status === 'active' &&
-                                            <button onClick={() => handleBlock(user._id)} className="btn btn-ghost text-white btn-sm bg-red-600">
+                                        {user.status === 'active' ?
+                                            <button onClick={() => handleBlock(user)} className="btn btn-ghost text-white btn-sm bg-red-600">
                                                 <FaUserAltSlash />
+                                            </button> :
+                                            <button onClick={() => handleRemoveBlock(user)} className="btn btn-ghost text-white btn-sm bg-green-600">
+                                                <FaUserCheck />
                                             </button>
                                         }
 
