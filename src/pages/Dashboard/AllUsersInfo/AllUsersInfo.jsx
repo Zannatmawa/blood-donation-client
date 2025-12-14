@@ -3,6 +3,10 @@ import useAuth from '../../../hooks/useAuth';
 import useAxios from '../../../hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import { MdBlock } from "react-icons/md";
+import { FaUserCheck } from "react-icons/fa";
+import { FaUserAltSlash } from "react-icons/fa";
+
+import Swal from 'sweetalert2';
 
 const AllUsersInfo = () => {
     const { user } = useAuth();
@@ -16,8 +20,21 @@ const AllUsersInfo = () => {
             return res.data;
         }
     })
-    const handleBlock = () => {
-
+    const handleBlock = (user) => {
+        const statusInfo = { status: 'blocked' }
+        axiosSecure.patch(`/all-users/${user._id}`, statusInfo)
+            .then(res => {
+                console.log(res.data)
+                if (res.data.modifiedCount) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: "success",
+                        title: `donor marked as blocked`,
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+            })
     }
     return (
         <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
@@ -56,9 +73,12 @@ const AllUsersInfo = () => {
                                     <td>{user.role}</td>
                                     <td className=' text-green-600 font-bold '>{user.status}</td>
                                     <th>
-                                        <button onClick={handleBlock} className="btn btn-ghost text-white btn-sm bg-red-600">
-                                            <MdBlock />
-                                        </button>
+                                        {user.status === 'active' &&
+                                            <button onClick={() => handleBlock(user._id)} className="btn btn-ghost text-white btn-sm bg-red-600">
+                                                <FaUserAltSlash />
+                                            </button>
+                                        }
+
                                     </th>
                                 </tr>
                             )

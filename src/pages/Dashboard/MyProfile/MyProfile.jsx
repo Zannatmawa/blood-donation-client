@@ -9,6 +9,7 @@ import { useLoaderData } from 'react-router';
 const MyProfile = () => {
     const { register, handleSubmit, control, formState: { errors } } = useForm();
     const { user } = useAuth();
+    console.log(user)
 
     const allDistricts = useLoaderData();
     const districts = allDistricts[0].data;
@@ -73,7 +74,7 @@ const MyProfile = () => {
                     <label class="text-gray-700 font-medium">Photo</label>
                     <input
                         type="file"
-
+                        defaultValue={user?.photoURL}
                         {...register('photo', { required: true })}
                         class="file-input w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none"
                     />
@@ -84,6 +85,7 @@ const MyProfile = () => {
                     <label class="text-gray-700 font-medium">Blood Group</label>
                     <select
                         name="bloodGroup"
+                          defaultValue={user?.photoURL}
                         className="select select-bordered w-full"
                         {...register('blood', { required: true })}
                     >

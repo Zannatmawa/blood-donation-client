@@ -70,6 +70,10 @@ export const router = createBrowserRouter([
                 Component: MyDontationRequest
             },
             {
+                path: 'edit-blood-donation-req',
+                Component: MyDontationRequest
+            },
+            {
                 path: 'all-donation-req',
                 Component: AllDonationRequest
             },

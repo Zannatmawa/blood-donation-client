@@ -5,6 +5,8 @@ import { FaEye, FaUserCheck } from 'react-icons/fa';
 // import { IoPersonRemoveSharp } from 'react-icons/io5';
 import { FaTrashCan } from 'react-icons/fa6';
 import { RiEditBoxLine } from "react-icons/ri";
+import { RiProgress1Line } from "react-icons/ri";
+
 
 import Swal from 'sweetalert2';
 import { useQuery } from '@tanstack/react-query'
@@ -13,14 +15,33 @@ import { Link } from 'lucide-react';
 const AllDonationRequest = () => {
     const { user } = useAuth();
     const axiosSecure = useAxios();
-    const { data: donationRequest = [] } = useQuery({
-        queryKey: ['allDonationRequest', user?.email],
+    const { refetch, data: donationRequest = [] } = useQuery({
+        queryKey: ['allDonationRequest', 'pending'],
         queryFn: async () => {
-            //http://localhost:3000/my-donation-req/
-            const res = await axiosSecure.get(`/my-donation-requests`);
+            const res = await axiosSecure.get(`/all-blood-donation-request`);
             return res.data;
         }
     })
+    const handleUpdateStatus = (donation, status) => {
+        const updateInfo = { status: status }
+        console.log(status)
+        axiosSecure.patch(`/all-blood-donation-request/${donation._id}`, updateInfo)
+            .then(res => {
+                if (res.data.modifiedCount) {
+                    refetch();
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: "success",
+                        title: `Rider has been approved ${status}!`,
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+            })
+    }
+    const handleInProgress = (donation) => {
+        handleUpdateStatus(donation, 'inprogress')
+    }
     return (
         <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
             <h2>All reqy:{donationRequest.length}</h2>
@@ -47,30 +68,23 @@ const AllDonationRequest = () => {
                                 <th>{r.bloodGroup}</th>
                                 <th>{r.donationDate}</th>
                                 <th>{r.donationTime}</th>
-                                <th className='text-red-600'>{r.status}</th>
-
-                                {/* <button onClick={() => handleReject(rider)} className='btn'>
-                                    <RiEditBoxLine />
-                                </button> */}
-                                {/* <Link to={"/edit-blood-donation-req"} className='btn'>
-                                    <RiEditBoxLine />
-                                </Link> */}
-                                <button className='btn'>
-                                    <FaEye />
-                                </button>
-                                <button onClick={() => handleApproval(rider)} className='btn'>
-                                    <FaUserCheck />
-                                </button>
-                                {/* <button onClick={() => handleReject(rider)} className='btn'>
-                                    <IoPersonRemoveSharp />
-                                </button> */}
-                                <button className='btn'>
-                                    <FaTrashCan />
-                                </button>
+                                <th className={`${r.status === 'inprogress' ? ' text-yellow-500' : 'text-red-600'}`}>{r.status}</th>
+                                <th className='text-red-600'>
+                                    <button onClick={() => handleInProgress(r)} className='btn'>
+                                        <RiEditBoxLine />
+                                    </button>
+                                    <button className='btn'>
+                                        <FaTrashCan />
+                                    </button>
+                                    <button className='btn'>
+                                        <FaEye />
+                                    </button>
+                                </th>
                             </tr>)
                     }
 
                 </tbody>
+
             </table>
         </div>
     )

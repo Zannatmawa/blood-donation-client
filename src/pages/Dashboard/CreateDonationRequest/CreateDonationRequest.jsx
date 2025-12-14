@@ -4,6 +4,7 @@ import useAuth from '../../../hooks/useAuth'
 import axios from 'axios';
 import { Link, useLoaderData, useLocation, useNavigate } from 'react-router';
 import useAxios from '../../../hooks/useAxios';
+import swal from 'sweetalert2';
 
 const CreateDonationRequest = () => {
     const { user } = useAuth();
@@ -30,9 +31,12 @@ const CreateDonationRequest = () => {
     const handleDonationReq = (data) => {
         console.log(data)
         axiosSecure.post('/my-donation-requests', data)
-            .then(res => console.log(res))
+            .then(res => {
+
+            })
             .catch(error => console.log(error))
     }
+
 
     return (
         <div>
