@@ -13,6 +13,9 @@ import PendingDontaionRequest from "../pages/PendingDontaionRequest/PendingDonta
 import AllDonationRequest from "../pages/Dashboard/AllDonationRequest/AllDonationRequest";
 import AllUsersInfo from "../pages/Dashboard/AllUsersInfo/AllUsersInfo";
 import CreateDonationRequest from "../pages/Dashboard/CreateDonationRequest/CreateDonationRequest";
+import AdminRoute from "./AdminRoute";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import EditBloodDonationRequest from "../pages/Dashboard/EditBloodDonationRequest/EditBloodDonationRequest";
 
 
 
@@ -55,6 +58,10 @@ export const router = createBrowserRouter([
         element: <PrivateRoute><DashboardLayouts /></PrivateRoute>,
         children: [
             {
+                path: '/dashboard',
+                Component: Dashboard
+            },
+            {
                 path: 'my-profile',
                 Component: MyProfile,
                 loader: () => fetch('/districts.json').then(res => res.json())
@@ -66,20 +73,25 @@ export const router = createBrowserRouter([
 
             },
             {
+                path: 'edit-donation-request/:id',
+                Component: EditBloodDonationRequest
+            },
+            {
                 path: 'my-dontaion-req',
                 Component: MyDontationRequest
             },
-            {
-                path: 'edit-blood-donation-req',
-                Component: MyDontationRequest
-            },
+            // {
+            //     path: 'edit-blood-donation-req',
+            //     Component: MyDontationRequest
+            // },
             {
                 path: 'all-donation-req',
-                Component: AllDonationRequest
+                element: <AdminRoute><AllDonationRequest /></AdminRoute>
             },
             {
                 path: 'all-users-info',
-                Component: AllUsersInfo
+                Component: AllUsersInfo,
+                // element: <AdminRoute><AllUsersInfo /></AdminRoute>
             },
         ]
     }

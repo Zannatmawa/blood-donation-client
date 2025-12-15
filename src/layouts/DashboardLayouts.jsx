@@ -11,8 +11,10 @@ import {
 import { Link, Outlet } from "react-router";
 import MyProfile from "../pages/Dashboard/MyProfile/MyProfile";
 import useAuth from "../hooks/useAuth";
+import useRole from "../hooks/useRole";
 
 export default function Sidebar() {
+    const { role } = useRole();
     const [open, setOpen] = useState(true);
     const { user } = useAuth();
 
@@ -39,7 +41,7 @@ export default function Sidebar() {
                 <ul className="space-y-4 text-sm">
 
                     <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
-                        <Home size={20} /> <span className={open ? "block" : "hidden"}>Dashboard</span>
+                        <Home size={20} /> <span className={open ? "block" : "hidden"}><Link to="/dashboard">Dashboard</Link></span>
                     </li>
                     {/*everyone  */}
                     <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
@@ -51,14 +53,16 @@ export default function Sidebar() {
                     <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
                         <User size={20} /> <span className={open ? "block" : "hidden"}><Link to='/dashboard/my-dontaion-req'>My Donation request</Link></span>
                     </li>
-                    <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
-                        <User size={20} /> <span className={open ? "block" : "hidden"}><Link to='/dashboard/all-users-info'>All users Info</Link></span>
-                    </li>  {/* //for admin only */}
+                    {role === 'admin' && <>
+                        <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
+                            <User size={20} /> <span className={open ? "block" : "hidden"}><Link to='/dashboard/all-users-info'>All users Info</Link></span>
+                        </li>  {/* //for admin only */}
 
-                    <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
-                        <HeartPulse size={20} />
-                        <span className={open ? "block" : "hidden"}><Link to='/dashboard/all-donation-req'>All Blood Donation Requests</Link></span>
-                    </li>
+                        <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
+                            <HeartPulse size={20} />
+                            <span className={open ? "block" : "hidden"}><Link to='/dashboard/all-donation-req'>All Blood Donation Requests</Link></span>
+                        </li>
+                    </>}
                     {/* //for admin and vol */}
 
                     <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
@@ -85,7 +89,6 @@ export default function Sidebar() {
 
             {/* Dashboard Content Area */}
             <div className="flex-1 p-8 bg-gray-100">
-                <h1 className="text-3xl font-semibold">Welcome {user.displayName} !</h1>
                 <Outlet></Outlet>
             </div>
 

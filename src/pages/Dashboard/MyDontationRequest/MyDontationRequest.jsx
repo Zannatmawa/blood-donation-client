@@ -8,7 +8,6 @@ const MyDontationRequest = () => {
     const { data: donationRequest = [] } = useQuery({
         queryKey: ['myDonationRequest', user?.email],
         queryFn: async () => {
-            //http://localhost:3000/my-donation-req/
             const res = await axiosSecure.get(`/my-donation-requests?email=${user.email}`);
             return res.data;
         }

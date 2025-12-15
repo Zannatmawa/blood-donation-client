@@ -1,44 +1,34 @@
-import React, { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import React, { use } from 'react'
 import useAuth from '../../../hooks/useAuth'
-import axios from 'axios';
-import { Link, useLoaderData, useLocation, useNavigate } from 'react-router';
-import useAxios from '../../../hooks/useAxios';
+import { useParams } from 'react-router'
+import { useQuery } from '@tanstack/react-query'
+import useAxios from '../../../hooks/useAxios'
+import { useForm } from "react-hook-form";
+
 
 const EditBloodDonationRequest = () => {
+    const { id } = useParams()
     const { user } = useAuth();
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const axiosSecure = useAxios()
-    // const location = useLocation();
-    // const navigate = useNavigate();
-
-    const allDistricts = useLoaderData();
-    const districts = allDistricts[0].data;
-
-    const [districtId, setDistrictId] = useState("");
-    const [upazillas, setUpazillas] = useState([]);
-
-    useEffect(() => {
-        fetch('/upazilla.json')
-            .then(res => res.json())
-            .then(data => {
-                setUpazillas(data[0].data)
-            });
-    }, []);
-    const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
-
-    const handleDonationReq = (data) => {
-        console.log(data)
-        axiosSecure.post('/my-donation-requests', data)
-            .then(res => console.log(res))
-            .catch(error => console.log(error))
-    }
+    const axiosSecure = useAxios();
+    const {
+        register,
+        handleSubmit,
+        reset
+    } = useForm();
+    const { data: donation, isLoading } = useQuery({
+        queryKey: ['donation', id],
+        enabled: !!id,
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/my-donation-requests/${id}`);
+            return res.data;
+        }
+    });
 
     return (
         <div>
-            <h2 className='text-5xl font-bold'>Create Donation Request</h2>
+            <h2 className='text-5xl font-bold'>Edit Donation Request</h2>
 
-            <form onSubmit={handleSubmit(handleDonationReq)} className='mt-12 p-4'>
+            <form className='mt-12 p-4'>
 
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-12 my-8'>
 
@@ -60,7 +50,7 @@ const EditBloodDonationRequest = () => {
                             defaultValue={user?.email}
                             readOnly
                             className="input w-full bg-gray-100"
-                            {...register("requesterEmail")}
+                        // {...register("requesterEmail")}
                         />
                     </fieldset>
 
@@ -80,7 +70,7 @@ const EditBloodDonationRequest = () => {
 
                     <fieldset className="fieldset">
                         <label className="label">Recipient District</label>
-                        <select
+                        {/* <select
                             className="select w-full"
                             {...register("recipientDistrict")}
                             onChange={(e) => setDistrictId(e.target.value)}
@@ -89,14 +79,14 @@ const EditBloodDonationRequest = () => {
                             {districts.map(d => (
                                 <option key={d.id} value={d.id}>{d.name}</option>
                             ))}
-                        </select>
+                        </select> */}
                     </fieldset>
 
                 </div>
 
                 <fieldset className="fieldset">
                     <label className="label">Recipient Upazilla</label>
-                    <select
+                    {/* <select
                         className="select w-full"
                         {...register("recipientUpazilla")}
                     >
@@ -106,7 +96,7 @@ const EditBloodDonationRequest = () => {
                             .map(u => (
                                 <option key={u.id} value={u.name}>{u.name}</option>
                             ))}
-                    </select>
+                    </select> */}
                 </fieldset>
 
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-12 my-8'>
@@ -117,7 +107,7 @@ const EditBloodDonationRequest = () => {
                             type="text"
                             className="input w-full"
                             placeholder="Dhaka Medical College Hospital"
-                            {...register("hospitalName")}
+                        // {...register("hospitalName")}
                         />
                     </fieldset>
 
@@ -127,7 +117,7 @@ const EditBloodDonationRequest = () => {
                             type="text"
                             className="input w-full"
                             placeholder="Zahir Raihan Rd, Dhaka"
-                            {...register("fullAddress")}
+                        // {...register("fullAddress")}
                         />
                     </fieldset>
 
@@ -137,11 +127,13 @@ const EditBloodDonationRequest = () => {
 
                     <fieldset className="fieldset">
                         <label className="label">Blood Group</label>
-                        <select className="select w-full" {...register("bloodGroup")}>
-                            <option value="">Select Blood Group</option>
+                        <select className="select w-full"
+                        // {...register("bloodGroup")}
+                        >
+                            {/* <option value="">Select Blood Group</option>
                             {bloodGroups.map(bg => (
                                 <option key={bg} value={bg}>{bg}</option>
-                            ))}
+                            ))} */}
                         </select>
                     </fieldset>
 
@@ -150,7 +142,7 @@ const EditBloodDonationRequest = () => {
                         <input
                             type="date"
                             className="input w-full"
-                            {...register("donationDate")}
+                        // {...register("donationDate")}
                         />
                     </fieldset>
 
@@ -161,7 +153,7 @@ const EditBloodDonationRequest = () => {
                     <input
                         type="time"
                         className="input w-full"
-                        {...register("donationTime")}
+                    // {...register("donationTime")}
                     />
                 </fieldset>
 
@@ -171,7 +163,7 @@ const EditBloodDonationRequest = () => {
                         className="textarea w-full"
                         rows="4"
                         placeholder="Explain why you need blood..."
-                        {...register("requestMessage")}
+                    // {...register("requestMessage")}
                     ></textarea>
                 </fieldset>
 
@@ -185,6 +177,3 @@ const EditBloodDonationRequest = () => {
 }
 
 export default EditBloodDonationRequest
-
-
-

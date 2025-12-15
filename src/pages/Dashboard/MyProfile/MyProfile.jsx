@@ -1,30 +1,21 @@
-import React, { use, useEffect, useState } from 'react'
-import { useForm, useWatch } from 'react-hook-form'
-// import { useLoaderData, useNavigate } from 'react-router';
+import { useForm } from 'react-hook-form'
 import Swal from 'sweetalert2';
 import useAuth from '../../../hooks/useAuth';
-import { useLoaderData } from 'react-router';
-// import useAxios from '../../hooks/useAxios';
+import useAxios from '../../../hooks/useAxios';
+import { useQuery } from '@tanstack/react-query';
 
 const MyProfile = () => {
-    const { register, handleSubmit, control, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const { user } = useAuth();
-    console.log(user)
+    const axiosSecure = useAxios();
+    const { data: allUsersInfo = [] } = useQuery({
+        queryKey: ['myDonationRequest', user?.email],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/all-users`);
+            return res.data;
+        }
+    })
 
-    const allDistricts = useLoaderData();
-    const districts = allDistricts[0].data;
-
-    const [districtId, setDistrictId] = useState("");
-    const [upazillas, setUpazillas] = useState([]);
-
-    useEffect(() => {
-        fetch('/upazilla.json')
-            .then(res => res.json())
-            .then(data => {
-                setUpazillas(data[0].data)
-            });
-    }, []);
-    const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
     return (
         <div className="max-w-3xl mx-auto p-6 shadow rounded bg-white">
@@ -74,18 +65,18 @@ const MyProfile = () => {
                     <label class="text-gray-700 font-medium">Photo</label>
                     <input
                         type="file"
-                        defaultValue={user?.photoURL}
+                        // defaultValue={user?.photoURL}
                         {...register('photo', { required: true })}
                         class="file-input w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none"
                     />
                     {errors.photo?.type === 'required' && <p className='text-red-600'>Photo is required</p>}
                 </div>
                 {/* blood grp */}
-                <fieldset className="fieldset">
+                {/* <fieldset className="fieldset">
                     <label class="text-gray-700 font-medium">Blood Group</label>
                     <select
                         name="bloodGroup"
-                          defaultValue={user?.photoURL}
+                        defaultValue={user?.photoURL}
                         className="select select-bordered w-full"
                         {...register('blood', { required: true })}
                     >
@@ -94,10 +85,10 @@ const MyProfile = () => {
                             <option key={bg} value={bg}>{bg}</option>
                         ))}
                     </select>
-                </fieldset>
+                </fieldset> */}
                 {/* District */}
 
-                <fieldset className="fieldset">
+                {/* <fieldset className="fieldset">
                     <legend className="fieldset-legend ">Select a District </legend>
                     <select {...register('district')} onChange={(e) => setDistrictId(e.target.value)} defaultValue="" className="select w-full ">
                         <option value="" disabled>Pick a District</option>
@@ -107,9 +98,9 @@ const MyProfile = () => {
                             </option>
                         ))}
                     </select>
-                </fieldset>
+                </fieldset> */}
                 {/* Upazila */}
-                <fieldset className="fieldset">
+                {/* <fieldset className="fieldset">
                     <legend className="fieldset-legend">Select a Upazilla</legend>
                     <select {...register('upazilla')} defaultValue="" className="select w-full">
                         <option value="" disabled>Pick a Upazilla</option>
@@ -120,7 +111,7 @@ const MyProfile = () => {
                             ))
                         }
                     </select>
-                </fieldset>
+                </fieldset> */}
                 {/* Submit */}
 
                 <button className="btn bg-green-600  text-black">
