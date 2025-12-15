@@ -74,7 +74,8 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'edit-donation-request/:id',
-                Component: EditBloodDonationRequest
+                Component: EditBloodDonationRequest,
+                loader: () => fetch('/districts.json').then(res => res.json())
             },
             {
                 path: 'my-dontaion-req',
