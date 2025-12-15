@@ -2,16 +2,29 @@ import React from 'react'
 import useAuth from '../../../hooks/useAuth'
 import useAxios from '../../../hooks/useAxios';
 import { useQuery } from '@tanstack/react-query'
+import { useNavigate } from 'react-router';
 const MyDontationRequest = () => {
     const { user } = useAuth();
     const axiosSecure = useAxios();
-    const { data: donationRequest = [] } = useQuery({
+    const navigate = useNavigate();
+
+    const { refetch, data: donationRequest = [] } = useQuery({
         queryKey: ['myDonationRequest', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/my-donation-requests?email=${user.email}`);
             return res.data;
         }
     })
+    const deleteDonationReq = (id) => {
+        axiosSecure.delete(`/my-donation-requests/${id}`,)
+            .then(res => {
+                if (res.data.deletedCount > 0) {
+                    alert('deleted')
+                    // swal.fire("Deleted!", "Donation request removed", "success");
+                    refetch(); // or navigate
+                }
+            });
+    }
     return (
         <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
             <h2>All reqy:{donationRequest.length}</h2>
@@ -38,8 +51,29 @@ const MyDontationRequest = () => {
                                 <th>{r.bloodGroup}</th>
                                 <th>{r.donationDate}</th>
                                 <th>{r.donationTime}</th>
-                                <th className='text-red-600'>{r.status}</th>
-                                <button className='btn btn-sm'>view</button>
+                                <th className={`${r.status === 'inprogress' ? 'text-yellow-500' : 'text-red-600'}`}>{r.status}</th>
+                                <th>
+                                    {
+                                        r.status === 'inprogress' && <>
+                                            <button className='btn btn-sm '>done</button>
+                                            <button className='btn btn-sm '>cancel</button>
+                                        </>
+                                    }
+                                    <button
+                                        onClick={() => navigate(`/dashboard/edit-donation-request/${r._id}`)}
+                                        className="btn btn-sm"
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        onClick={() => deleteDonationReq(r._id)}
+                                        className="btn btn-sm"
+                                    >
+                                        Delete
+                                    </button>
+                                    <button className='btn btn-sm '>view</button>
+
+                                </th>
                             </tr>)
                     }
 

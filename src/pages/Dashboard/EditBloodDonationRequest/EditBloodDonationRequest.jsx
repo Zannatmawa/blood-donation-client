@@ -48,12 +48,10 @@ const EditBloodDonationRequest = () => {
                 donationTime: donation.donationTime,
                 requestMessage: donation.requestMessage
             });
-            console.log(donation.recipientDistrict, donation.recipientUpazilla)
         }
     }, [donation, reset]);
 
     const updateDonationReq = (donation) => {
-        console.log(donation)
 
         const updatedData = {
             bloodGroup: donation.bloodGroup,
@@ -67,7 +65,6 @@ const EditBloodDonationRequest = () => {
             requestMessage: donation.requestMessage
         };
 
-        console.log(updatedData)
         axiosSecure.patch(`/my-donation-requests/${id}`, updatedData)
             .then(res => {
                 if (res.data.modifiedCount > 0) {
