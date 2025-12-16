@@ -11,7 +11,10 @@ const AdminRoute = ({ children }) => {
     if (loading || roleLoading) {
         return <Loading />
     }
-    if (role !== 'adming') {
+    if (role === 'volunteer') {
+        return children
+    }
+    if (role !== 'admin') {
         return <Forbidden />
     }
     return children

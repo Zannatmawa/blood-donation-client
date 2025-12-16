@@ -81,18 +81,13 @@ export const router = createBrowserRouter([
                 path: 'my-dontaion-req',
                 Component: MyDontationRequest
             },
-            // {
-            //     path: 'edit-blood-donation-req',
-            //     Component: MyDontationRequest
-            // },
             {
                 path: 'all-donation-req',
                 element: <AdminRoute><AllDonationRequest /></AdminRoute>
             },
             {
                 path: 'all-users-info',
-                Component: AllUsersInfo,
-                // element: <AdminRoute><AllUsersInfo /></AdminRoute>
+                element: <AdminRoute><AllUsersInfo /></AdminRoute>
             },
         ]
     }

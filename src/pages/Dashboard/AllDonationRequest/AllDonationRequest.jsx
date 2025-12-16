@@ -1,8 +1,8 @@
 import React from 'react'
-import useAuth from '../../../hooks/useAuth'
+// import useAuth from '../../../hooks/useAuth'
 import useAxios from '../../../hooks/useAxios';
-import { FaEye, FaUserCheck } from 'react-icons/fa';
 // import { IoPersonRemoveSharp } from 'react-icons/io5';
+import { FaEye, FaUserCheck } from 'react-icons/fa';
 import { FaTrashCan } from 'react-icons/fa6';
 import { RiEditBoxLine } from "react-icons/ri";
 import { RiProgress1Line } from "react-icons/ri";
@@ -10,11 +10,14 @@ import { RiProgress1Line } from "react-icons/ri";
 
 import Swal from 'sweetalert2';
 import { useQuery } from '@tanstack/react-query'
-import { Link } from 'lucide-react';
+import { useNavigate } from 'react-router';
+import useRole from '../../../hooks/useRole';
 
 const AllDonationRequest = () => {
-    const { user } = useAuth();
+    // const { user } = useAuth();
+    const { role } = useRole();
     const axiosSecure = useAxios();
+    const navigate = useNavigate();
     const { refetch, data: donationRequest = [] } = useQuery({
         queryKey: ['allDonationRequest', 'pending'],
         queryFn: async () => {
@@ -41,6 +44,16 @@ const AllDonationRequest = () => {
     }
     const handleInProgress = (donation) => {
         handleUpdateStatus(donation, 'inprogress')
+    }
+    const deleteDonationReq = (id) => {
+        axiosSecure.delete(`/my-donation-requests/${id}`,)
+            .then(res => {
+                if (res.data.deletedCount > 0) {
+                    alert('deleted')
+                    // swal.fire("Deleted!", "Donation request removed", "success");
+                    refetch(); // or navigate
+                }
+            });
     }
     return (
         <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
@@ -70,21 +83,33 @@ const AllDonationRequest = () => {
                                 <th>{r.donationTime}</th>
                                 <th className={`${r.status === 'inprogress' ? ' text-yellow-500' : 'text-red-600'}`}>{r.status}</th>
                                 <th className='text-red-600'>
-                                    <button onClick={() => handleInProgress(r)} className='btn'>
-                                        <RiEditBoxLine />
-                                    </button>
-                                    <button className='btn'>
-                                        <FaTrashCan />
-                                    </button>
-                                    <button className='btn'>
-                                        <FaEye />
-                                    </button>
+                                    {role === 'volunteer' ? <button onClick={() => handleInProgress(r)} className='btn'>
+                                        inprogress
+                                    </button> : <>
+                                        <button onClick={() => handleInProgress(r)} className='btn'>
+                                            inprogress
+                                        </button>
+                                        <button
+                                            onClick={() => navigate(`/dashboard/edit-donation-request/${r._id}`)}
+                                            className="btn btn-sm"
+                                        >
+                                            <RiEditBoxLine />
+                                        </button>
+                                        <button
+                                            onClick={() => deleteDonationReq(r._id)}
+                                            className="btn btn-sm"
+                                        >
+                                            <FaTrashCan />
+                                        </button>
+                                        <button className='btn btn-sm '>
+                                            <FaEye />
+                                        </button>
+                                    </>}
+
                                 </th>
                             </tr>)
                     }
-
                 </tbody>
-
             </table>
         </div>
     )

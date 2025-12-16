@@ -3,6 +3,9 @@ import useAuth from '../../../hooks/useAuth'
 import useAxios from '../../../hooks/useAxios';
 import { useQuery } from '@tanstack/react-query'
 import { useNavigate } from 'react-router';
+import { FaEye, FaUserCheck } from 'react-icons/fa';
+import { FaTrashCan } from 'react-icons/fa6';
+import { RiEditBoxLine } from "react-icons/ri";
 const MyDontationRequest = () => {
     const { user } = useAuth();
     const axiosSecure = useAxios();
@@ -63,15 +66,17 @@ const MyDontationRequest = () => {
                                         onClick={() => navigate(`/dashboard/edit-donation-request/${r._id}`)}
                                         className="btn btn-sm"
                                     >
-                                        Edit
+                                        <RiEditBoxLine />
                                     </button>
                                     <button
                                         onClick={() => deleteDonationReq(r._id)}
                                         className="btn btn-sm"
                                     >
-                                        Delete
+                                        <FaTrashCan />
                                     </button>
-                                    <button className='btn btn-sm '>view</button>
+                                    <button className='btn btn-sm '>
+                                        <FaEye />
+                                    </button>
 
                                 </th>
                             </tr>)

@@ -5,6 +5,8 @@ import { useQuery } from '@tanstack/react-query';
 import { MdBlock } from "react-icons/md";
 import { FaUserCheck } from "react-icons/fa";
 import { FaUserAltSlash } from "react-icons/fa";
+import { BsThreeDotsVertical } from "react-icons/bs";
+
 
 import Swal from 'sweetalert2';
 
@@ -22,7 +24,7 @@ const AllUsersInfo = () => {
     })
     const handleBlock = (user) => {
         const statusInfo = { status: 'blocked' }
-        axiosSecure.patch(`/all-users/${user._id}/role`, statusInfo)
+        axiosSecure.patch(`/all-users/${user._id}/status`, statusInfo)
             .then(res => {
                 if (res.data.modifiedCount) {
                     refetch();
@@ -38,7 +40,7 @@ const AllUsersInfo = () => {
     }
     const handleRemoveBlock = (user) => {
         const statusInfo = { status: 'active' }
-        axiosSecure.patch(`/all-users/${user._id}/role`, statusInfo)
+        axiosSecure.patch(`/all-users/${user._id}/status`, statusInfo)
             .then(res => {
                 if (res.data.modifiedCount) {
                     refetch();
@@ -52,6 +54,43 @@ const AllUsersInfo = () => {
                 }
             })
     }
+
+    const handleMakeVolunter = (user) => {
+        console.log(user)
+        const roleInfo = { role: 'volunteer' }
+        axiosSecure.patch(`/all-users/${user._id}/role`, roleInfo)
+            .then(res => {
+                if (res.data.modifiedCount) {
+                    refetch();
+                    // Swal.fire({
+                    //     position: 'top-end',
+                    //     icon: "success",
+                    //     title: `donor marked as blocked`,
+                    //     showConfirmButton: false,
+                    //     timer: 2000
+                    // });
+                }
+            })
+    }
+    //handleMakeAdmin
+    const handleMakeAdmin = (user) => {
+        console.log(user)
+        const roleInfo = { role: 'admin' }
+        axiosSecure.patch(`/all-users/${user._id}/role`, roleInfo)
+            .then(res => {
+                if (res.data.modifiedCount) {
+                    refetch();
+                    // Swal.fire({
+                    //     position: 'top-end',
+                    //     icon: "success",
+                    //     title: `donor marked as blocked`,
+                    //     showConfirmButton: false,
+                    //     timer: 2000
+                    // });
+                }
+            })
+    }
+
     return (
         <>
             <p>search:{searchUser}</p>
@@ -83,6 +122,7 @@ const AllUsersInfo = () => {
                                 <th>User role</th>
                                 <th>status</th>
                                 <th> button</th>
+                                <th> others</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -103,7 +143,7 @@ const AllUsersInfo = () => {
                                         </td>
                                         <td>{user.email}</td>
                                         <td>{user.displayName}</td>
-                                        <td>{user.role}</td>
+                                        <td className={`${user.role === 'volunteer' ? "text-green-600 font-bold " : " text-black font-bold "}`}>{user.role}</td>
                                         <td className={`${user.status === 'blocked' ? "text-red-600 font-bold " : " text-green-600 font-bold "}`}>{user.status}</td>
                                         <th>
                                             {user.status === 'active' ?
@@ -114,8 +154,16 @@ const AllUsersInfo = () => {
                                                     <FaUserCheck />
                                                 </button>
                                             }
-
                                         </th>
+                                        <div className="dropdown dropdown-end">
+                                            <div tabIndex={0} role="button" className="btn btn-ghost rounded-field"><BsThreeDotsVertical /></div>
+                                            <ul
+                                                tabIndex="-1"
+                                                className="menu dropdown-content bg-red-600 rounded-box z-1 mt-5 w-52 p-5 shadow-sm">
+                                                <button onClick={() => handleMakeVolunter(user)} className='btn btn-sm mb-3'>Make Volunteer</button>
+                                                <button onClick={() => handleMakeAdmin(user)} className='btn btn-sm'>Make Admin</button>
+                                            </ul>
+                                        </div>
                                     </tr>
                                 )
                             }
@@ -123,7 +171,7 @@ const AllUsersInfo = () => {
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div >
         </>
     )
 }

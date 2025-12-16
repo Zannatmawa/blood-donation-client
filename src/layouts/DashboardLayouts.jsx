@@ -63,6 +63,10 @@ export default function Sidebar() {
                             <span className={open ? "block" : "hidden"}><Link to='/dashboard/all-donation-req'>All Blood Donation Requests</Link></span>
                         </li>
                     </>}
+                    {role === 'volunteer' && <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
+                        <HeartPulse size={20} />
+                        <span className={open ? "block" : "hidden"}><Link to='/dashboard/all-donation-req'>All Blood Donation Requests</Link></span>
+                    </li>}
                     {/* //for admin and vol */}
 
                     <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">

@@ -1,10 +1,10 @@
 import React from 'react'
-import useAuth from '../../hooks/useAuth'
-import useAxios from '../../hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
 import { useNavigate } from "react-router";
-import swal from 'sweetalert2';
+// import swal from 'sweetalert2';
+import useAuth from '../../../hooks/useAuth';
+import useAxios from '../../../hooks/useAxios';
 
 const DonorDashboard = () => {
     const { user } = useAuth();
@@ -90,3 +90,4 @@ const DonorDashboard = () => {
     )
 }
 
+export default DonorDashboard
