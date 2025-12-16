@@ -5,7 +5,6 @@ import AuthLayouts from "../layouts/AuthLayouts";
 import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Register/Register";
 import PrivateRoute from "./PrivateRoute";
-import Donor from "../pages/Donor/Donor";
 import DashboardLayouts from "../layouts/DashboardLayouts";
 import MyDontationRequest from "../pages/Dashboard/MyDontationRequest/MyDontationRequest";
 import MyProfile from "../pages/Dashboard/MyProfile/MyProfile";
@@ -17,6 +16,8 @@ import AdminRoute from "./AdminRoute";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import EditBloodDonationRequest from "../pages/Dashboard/EditBloodDonationRequest/EditBloodDonationRequest";
 import Search from "../pages/Home/Search/Search";
+import ViewDonationReq from "../pages/Dashboard/ViewDonationReq/ViewDonationReq";
+import Funding from "../pages/Funding/Funding";
 
 
 
@@ -31,7 +32,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'beADonor',
-                element: <Donor />
+                // element: <Donor />
             },
             {
                 path: 'pending-donation-requests',
@@ -43,6 +44,10 @@ export const router = createBrowserRouter([
                 loader: () => fetch('/districts.json').then(res => res.json())
 
             },
+            {
+                path: '/funding',
+                element: <PrivateRoute><Funding /></PrivateRoute>
+            }
         ]
     },
     {
@@ -67,6 +72,10 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard',
                 Component: Dashboard
+            },
+            {
+                path: '/dashboard/view-donation-req/:id',
+                Component: ViewDonationReq
             },
             {
                 path: 'my-profile',
