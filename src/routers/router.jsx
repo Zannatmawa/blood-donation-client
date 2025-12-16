@@ -16,6 +16,7 @@ import CreateDonationRequest from "../pages/Dashboard/CreateDonationRequest/Crea
 import AdminRoute from "./AdminRoute";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import EditBloodDonationRequest from "../pages/Dashboard/EditBloodDonationRequest/EditBloodDonationRequest";
+import Search from "../pages/Home/Search/Search";
 
 
 
@@ -35,7 +36,13 @@ export const router = createBrowserRouter([
             {
                 path: 'pending-donation-requests',
                 element: <PendingDontaionRequest />
-            }
+            },
+            {
+                path: '/search',
+                element: <Search />,
+                loader: () => fetch('/districts.json').then(res => res.json())
+
+            },
         ]
     },
     {

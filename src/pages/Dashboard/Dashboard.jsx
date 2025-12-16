@@ -9,7 +9,7 @@ const Dashboard = () => {
     if (role === 'admin') {
         return <AdminDashboardHome />
     }
-    if (role === 'volunteer ') {
+    if (role === 'volunteer') {
         return <AdminDashboardHome />
     }
     if (role === 'donor') {

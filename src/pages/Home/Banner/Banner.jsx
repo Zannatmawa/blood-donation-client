@@ -20,7 +20,7 @@ const Banner = () => {
                     {/* CTA Buttons */}
                     <div className="mt-8 flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center md:justify-start">
                         <Link to="/register" className="px-8 py-3 bg-red-600 text-white rounded-lg font-semibold shadow-md hover:bg-red-700 transition">Join as a donor</Link>
-                        <Link to="/register" className="px-8 py-3 bg-red-600 text-white rounded-lg font-semibold shadow-md hover:bg-red-700 transition">Search Donors</Link>
+                        <Link to="/search" className="px-8 py-3 bg-red-600 text-white rounded-lg font-semibold shadow-md hover:bg-red-700 transition">Search Donors</Link>
                     </div>
 
                     {/* Stats */}

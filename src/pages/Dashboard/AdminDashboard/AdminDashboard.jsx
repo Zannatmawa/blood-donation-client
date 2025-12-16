@@ -1,13 +1,15 @@
 import { Users, HandHeart, Droplets } from "lucide-react";
+import useRole from "../../../hooks/useRole";
 
 export default function AdminDashboardHome() {
+    const { role } = useRole();
     return (
         <div className="p-6 md:p-10 bg-gray-100 min-h-screen">
 
             {/* Welcome Section */}
             <div className="bg-white rounded-xl shadow-md p-6 mb-10 border-l-4 border-red-600">
                 <h1 className="text-3xl font-bold text-gray-800">
-                    Welcome Back, Admin 👋
+                    Welcome Back, {role} 👋
                 </h1>
                 <p className="text-gray-600 mt-2">
                     Here’s an overview of Blood Bridge platform activity.
