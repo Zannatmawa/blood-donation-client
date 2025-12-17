@@ -3,11 +3,21 @@ import Swal from 'sweetalert2';
 import useAuth from '../../../hooks/useAuth';
 import useAxios from '../../../hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+import { useLoaderData } from 'react-router';
 
 const MyProfile = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, refetch, formState: { errors } } = useForm();
     const { user } = useAuth();
     const axiosSecure = useAxios();
+    const allDistricts = useLoaderData();
+
+    const districts = allDistricts[0].data;
+    const [districtId, setDistrictId] = useState("");
+    const [upazillas, setUpazillas] = useState([]);
+    const [isEditing, setIsEditing] = useState(false);
+
+
     const { data: allUsersInfo = [] } = useQuery({
         queryKey: ['myDonationRequest', user?.email],
         queryFn: async () => {
@@ -15,10 +25,37 @@ const MyProfile = () => {
             return res.data;
         }
     })
+    useEffect(() => {
+        fetch('/upazilla.json')
+            .then(res => res.json())
+            .then(data => {
+                setUpazillas(data[0].data)
+            });
+    }, []);
+    const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+    const handleEditProfile = () => {
+        alert('marufa')
+        setIsEditing(true)
+        reset();
+    }
 
+    const handleUpdateProfile = (data) => {
+        // const profileImg = data.photo[0]
+        console.log(data);
+        axiosSecure.patch(`/all-users/${user.email}`, data)
+            .then(res => {
+                refetch();
+                if (res.data.modifiedCount) {
+                    alert(res)
+                }
+            })
+    }
 
     return (
         <div className="max-w-3xl mx-auto p-6 shadow rounded bg-white">
+            <button onClick={handleEditProfile} className="btn btn-primary  text-black">
+                Edit
+            </button>
             <h2 className="text-4xl font-bold text-center mb-6">My Profile</h2>
 
             {/* Avatar Preview */}
@@ -30,15 +67,14 @@ const MyProfile = () => {
                     className="w-24 h-24 rounded-full border"
                 />
             </div>
-            <button className="btn btn-primary  text-black">
-                Edit
-            </button>
-            <form onSubmit={handleSubmit()} className="space-y-6">
+
+            <form onSubmit={handleSubmit(handleUpdateProfile)} className="space-y-6">
                 {/* Full Name */}
                 <div>
                     <label className="label font-semibold">Full Name</label>
                     <input
                         type="text"
+                        disabled={!isEditing}
                         defaultValue={user?.displayName}
                         {...register("name")}
                         className="input w-full border p-2 rounded"
@@ -72,10 +108,11 @@ const MyProfile = () => {
                     {errors.photo?.type === 'required' && <p className='text-red-600'>Photo is required</p>}
                 </div>
                 {/* blood grp */}
-                {/* <fieldset className="fieldset">
+                <fieldset className="fieldset">
                     <label class="text-gray-700 font-medium">Blood Group</label>
                     <select
                         name="bloodGroup"
+                        disabled={!isEditing}
                         defaultValue={user?.photoURL}
                         className="select select-bordered w-full"
                         {...register('blood', { required: true })}
@@ -85,12 +122,13 @@ const MyProfile = () => {
                             <option key={bg} value={bg}>{bg}</option>
                         ))}
                     </select>
-                </fieldset> */}
+                </fieldset>
                 {/* District */}
 
-                {/* <fieldset className="fieldset">
+                <fieldset className="fieldset">
                     <legend className="fieldset-legend ">Select a District </legend>
-                    <select {...register('district')} onChange={(e) => setDistrictId(e.target.value)} defaultValue="" className="select w-full ">
+                    <select {...register('district')} disabled={!isEditing}
+                        onChange={(e) => setDistrictId(e.target.value)} defaultValue="" className="select w-full ">
                         <option value="" disabled>Pick a District</option>
                         {districts.map(d => (
                             <option key={d.id} value={d.id}>
@@ -98,11 +136,12 @@ const MyProfile = () => {
                             </option>
                         ))}
                     </select>
-                </fieldset> */}
+                </fieldset>
                 {/* Upazila */}
-                {/* <fieldset className="fieldset">
+                <fieldset className="fieldset">
                     <legend className="fieldset-legend">Select a Upazilla</legend>
-                    <select {...register('upazilla')} defaultValue="" className="select w-full">
+                    <select {...register('upazilla')} disabled={!isEditing}
+                        defaultValue="" className="select w-full">
                         <option value="" disabled>Pick a Upazilla</option>
                         {upazillas
                             .filter(u => u.district_id == districtId)
@@ -111,10 +150,10 @@ const MyProfile = () => {
                             ))
                         }
                     </select>
-                </fieldset> */}
+                </fieldset>
                 {/* Submit */}
 
-                <button className="btn bg-green-600  text-black">
+                <button type='submit' className="btn bg-green-600  text-black">
                     Save
                 </button>
             </form>
