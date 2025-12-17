@@ -5,6 +5,11 @@ import { useNavigate } from "react-router";
 // import swal from 'sweetalert2';
 import useAuth from '../../../hooks/useAuth';
 import useAxios from '../../../hooks/useAxios';
+import { FaEye, FaUserCheck } from 'react-icons/fa';
+import { FaTrashCan } from 'react-icons/fa6';
+import { RiEditBoxLine } from "react-icons/ri";
+import { BsThreeDotsVertical } from "react-icons/bs";
+
 
 const DonorDashboard = () => {
     const { user } = useAuth();
@@ -60,23 +65,32 @@ const DonorDashboard = () => {
                                     <th>
                                         {
                                             r.status === 'inprogress' && <>
-                                                <button className='btn btn-sm '>done</button>
-                                                <button className='btn btn-sm '>cancel</button>
+                                                <div className="dropdown dropdown-end">
+                                                    <div tabIndex={0} role="button" className="btn btn-ghost rounded-field"><BsThreeDotsVertical /></div>
+                                                    <ul
+                                                        tabIndex="-1"
+                                                        className="menu dropdown-content bg-red-600 rounded-box z-1 mt-5 w-52 p-5 shadow-sm">
+                                                        <button className='btn btn-sm '>done</button>
+                                                        <button className='btn btn-sm '>cancel</button>
+                                                    </ul>
+                                                </div>
+
                                             </>
                                         }
-                                        <button
-                                            onClick={() => navigate(`/dashboard/edit-donation-request/${r._id}`)}
-                                            className="btn btn-sm"
-                                        >
-                                            Edit
-                                        </button>
-                                        <button
-                                            onClick={() => deleteDonationReq(r._id)}
-                                            className="btn btn-sm"
-                                        >
-                                            Delete
-                                        </button>
-                                        <button className='btn btn-sm '>view</button>
+                                        <th>
+                                            <button
+                                                onClick={() => navigate(`/dashboard/edit-donation-request/${r._id}`)}
+                                                className="btn btn-sm mr-2"
+                                            >
+                                                <RiEditBoxLine />
+                                            </button>
+                                            <button
+                                                onClick={() => deleteDonationReq(r._id)}
+                                                className="btn btn-sm mr-2"
+                                            >
+                                                <FaTrashCan />
+                                            </button>
+                                            <Link to={`/dashboard/view-donation-req/${r._id}`} className='btn btn-sm  mr-2'><FaEye /></Link>                                        </th>
 
                                     </th>
                                 </tr>)

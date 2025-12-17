@@ -2,7 +2,7 @@ import React from 'react'
 import useAuth from '../../../hooks/useAuth'
 import useAxios from '../../../hooks/useAxios';
 import { useQuery } from '@tanstack/react-query'
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { FaEye, FaUserCheck } from 'react-icons/fa';
 import { FaTrashCan } from 'react-icons/fa6';
 import { RiEditBoxLine } from "react-icons/ri";
@@ -74,9 +74,8 @@ const MyDontationRequest = () => {
                                     >
                                         <FaTrashCan />
                                     </button>
-                                    <button className='btn btn-sm '>
-                                        <FaEye />
-                                    </button>
+                                    <Link to={`/dashboard/view-donation-req/${r._id}`} className='btn btn-sm '><FaEye /></Link>
+
 
                                 </th>
                             </tr>)

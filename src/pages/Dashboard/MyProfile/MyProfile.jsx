@@ -1,13 +1,13 @@
 import { useForm } from 'react-hook-form'
-import Swal from 'sweetalert2';
 import useAuth from '../../../hooks/useAuth';
 import useAxios from '../../../hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useLoaderData } from 'react-router';
+import Notiflix from 'notiflix';
 
 const MyProfile = () => {
-    const { register, handleSubmit, reset, refetch, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const { user } = useAuth();
     const axiosSecure = useAxios();
     const allDistricts = useLoaderData();
@@ -18,7 +18,7 @@ const MyProfile = () => {
     const [isEditing, setIsEditing] = useState(false);
 
 
-    const { data: allUsersInfo = [] } = useQuery({
+    const { refetch, data: allUsersInfo = [] } = useQuery({
         queryKey: ['myDonationRequest', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/all-users`);
@@ -34,19 +34,25 @@ const MyProfile = () => {
     }, []);
     const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
     const handleEditProfile = () => {
-        alert('marufa')
         setIsEditing(true)
         reset();
     }
+    // const profileImg = data.photo[0]
 
     const handleUpdateProfile = (data) => {
-        // const profileImg = data.photo[0]
         console.log(data);
         axiosSecure.patch(`/all-users/${user.email}`, data)
             .then(res => {
                 refetch();
                 if (res.data.modifiedCount) {
-                    alert(res)
+                    Notiflix.Notify.success('Operation successful!');
+                    Notiflix.Confirm.show(
+                        'Confirm',
+                        'Are you sure?',
+                        'Yes',
+                        'No',
+                        () => console.log('Confirmed'),
+                    );
                 }
             })
     }
@@ -102,7 +108,7 @@ const MyProfile = () => {
                     <input
                         type="file"
                         // defaultValue={user?.photoURL}
-                        {...register('photo', { required: true })}
+                        {...register('photo')}
                         class="file-input w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none"
                     />
                     {errors.photo?.type === 'required' && <p className='text-red-600'>Photo is required</p>}
@@ -115,7 +121,7 @@ const MyProfile = () => {
                         disabled={!isEditing}
                         defaultValue={user?.photoURL}
                         className="select select-bordered w-full"
-                        {...register('blood', { required: true })}
+                        {...register('blood')}
                     >
                         <option value="">Select Blood Group</option>
                         {bloodGroups.map(bg => (

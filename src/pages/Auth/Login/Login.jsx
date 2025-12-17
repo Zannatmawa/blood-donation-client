@@ -3,10 +3,7 @@ import { useForm } from 'react-hook-form'
 import { Link, useLocation, useNavigate } from 'react-router'
 import Logo from '../../../components/Logo/Logo';
 import useAuth from '../../../hooks/useAuth';
-//@Marufa362 @Marufa362
-//marufa@gmail.com
-//@Golam362
-//369golammostafa@gmail.com
+
 const Login = () => {
     const { loginUser } = useAuth();
     const navigate = useNavigate();

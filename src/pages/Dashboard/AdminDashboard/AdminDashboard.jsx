@@ -1,8 +1,22 @@
 import { Users, HandHeart, Droplets } from "lucide-react";
 import useRole from "../../../hooks/useRole";
+import useAuth from "../../../hooks/useAuth";
+import { useState } from "react";
+import useAxios from "../../../hooks/useAxios";
+import { useQuery } from "@tanstack/react-query";
 
 export default function AdminDashboardHome() {
     const { role } = useRole();
+    const { user } = useAuth();
+    const axiosSecure = useAxios();
+    const { data: allUsersInfo = [] } = useQuery({
+        queryKey: ['myDonationRequest', user?.email],
+        queryFn: async () => {
+            //http://localhost:3000/my-donation-req/
+            const res = await axiosSecure.get(`/all-users`);
+            return res.data;
+        }
+    })
     return (
         <div className="p-6 md:p-10 bg-gray-100 min-h-screen">
 
@@ -25,7 +39,7 @@ export default function AdminDashboardHome() {
                         <Users className="text-red-600" size={28} />
                     </div>
                     <div>
-                        <h3 className="text-2xl font-bold text-gray-800">1,245</h3>
+                        <h3 className="text-2xl font-bold text-gray-800">{allUsersInfo.length}</h3>
                         <p className="text-gray-600">Total Donors</p>
                     </div>
                 </div>
