@@ -18,6 +18,7 @@ import EditBloodDonationRequest from "../pages/Dashboard/EditBloodDonationReques
 import Search from "../pages/Home/Search/Search";
 import ViewDonationReq from "../pages/Dashboard/ViewDonationReq/ViewDonationReq";
 import Funding from "../pages/Funding/Funding";
+import PaymentSuccess from "../pages/Dashboard/Payments/PaymentSuccess";
 
 
 
@@ -38,6 +39,11 @@ export const router = createBrowserRouter([
                 path: 'pending-donation-requests',
                 element: <PendingDontaionRequest />
             },
+            {
+                path: "/dashboard/payment-success",
+                element: <PaymentSuccess />
+            },
+
             {
                 path: '/search',
                 element: <Search />,
