@@ -3,6 +3,7 @@ import useAuth from '../hooks/useAuth'
 import useRole from '../hooks/useRole';
 import Loading from '../components/Loading';
 import Forbidden from '../components/Forbidden';
+import AllDonationRequest from '../pages/Dashboard/AllDonationRequest/AllDonationRequest';
 
 const AdminRoute = ({ children }) => {
     const { user, loading } = useAuth();
@@ -11,9 +12,7 @@ const AdminRoute = ({ children }) => {
     if (loading || roleLoading) {
         return <Loading />
     }
-    if (role === 'volunteer') {
-        return children
-    }
+
     if (role !== 'admin') {
         return <Forbidden />
     }

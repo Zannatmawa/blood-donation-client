@@ -3,19 +3,19 @@ const articles = [
         id: 1,
         title: "Why Blood Donation Saves Lives",
         date: "Sep 10, 2025",
-        image: "https://i.ibb.co/9rPZB7J/blood-donation.jpg",
+        image: "https://images.pexels.com/photos/12193105/pexels-photo-12193105.jpeg",
     },
     {
         id: 2,
         title: "Who Can Donate Blood? Eligibility Explained",
         date: "Sep 09, 2025",
-        image: "https://i.ibb.co/7yC1p3M/blood-test.jpg",
+        image: "https://images.pexels.com/photos/4531306/pexels-photo-4531306.jpeg",
     },
     {
         id: 3,
         title: "Common Myths About Blood Donation",
         date: "Sep 08, 2025",
-        image: "https://i.ibb.co/jZzF2QK/blood-bank.jpg",
+        image: "https://images.pexels.com/photos/5340267/pexels-photo-5340267.jpeg",
     },
 ];
 

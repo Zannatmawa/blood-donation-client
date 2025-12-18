@@ -32,16 +32,12 @@ const Search = () => {
         }
     })
 
-    console.log(donationRequest)
     const handleSearchDonor = (data) => {
         const bgroup = data.blood;
         const district = data.district;
         const upazilla = data.upazilla;
 
         const req = donationRequest.filter(req => req.bloodGroup === bgroup && req.recipientDistrict === district && req.recipientUpazilla === upazilla);
-
-        console.log('matched', req);
-
         setMatchedDonors(req)
 
 
@@ -49,7 +45,7 @@ const Search = () => {
 
     return (
         <>
-            <div className='w-full max-w-md mx-auto my-10 bg-white shadow-xl rounded-xl p-8 border border-red-200'>
+            <div className='md:w-96 w-80 max-w-md mx-auto my-10 bg-white shadow-xl rounded-xl p-8 border border-red-200'>
                 <div>
                     <h2 className='text-red-600 font-bold text-3xl text-center'>Search Donor</h2>
                 </div>
@@ -57,7 +53,7 @@ const Search = () => {
                     <form onSubmit={handleSubmit(handleSearchDonor)}>
                         {/* blood grp */}
                         <fieldset className="fieldset">
-                            <label class="text-gray-700 font-medium">Blood Group</label>
+                            <label className="text-gray-700 font-medium">Blood Group</label>
                             <select
                                 name="bloodGroup"
                                 className="select select-bordered w-full"
@@ -103,7 +99,7 @@ const Search = () => {
                     </form>
                 </div>
             </div>
-            <div className="mt-8">
+            <div className="mt-8 mx-5">
                 {matchedDonors.length === 0 ? (
                     <p className="text-gray-500">No donors found</p>
                 ) : (

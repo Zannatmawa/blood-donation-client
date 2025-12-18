@@ -19,6 +19,7 @@ import Search from "../pages/Home/Search/Search";
 import ViewDonationReq from "../pages/Dashboard/ViewDonationReq/ViewDonationReq";
 import Funding from "../pages/Funding/Funding";
 import PaymentSuccess from "../pages/Dashboard/Payments/PaymentSuccess";
+import AdminVolunteerRoute from "./VolunteerRoute";
 
 
 
@@ -104,13 +105,27 @@ export const router = createBrowserRouter([
                 Component: MyDontationRequest
             },
             {
-                path: 'all-donation-req',
-                element: <AdminRoute><AllDonationRequest /></AdminRoute>
+                path: "all-donation-req",
+                element: <AdminVolunteerRoute>
+                    <AllDonationRequest />
+                </AdminVolunteerRoute>,
             },
+
+            // {
+            //     path: 'all-donation-req',
+            //     element: <AdminRoute><AllDonationRequest /></AdminRoute>
+            // },
             {
                 path: 'all-users-info',
                 element: <AdminRoute><AllUsersInfo /></AdminRoute>
             },
         ]
+    },
+    {
+        hydrateFallbackElement: (
+            <div className="min-h-screen flex items-center justify-center">
+                Loading...
+            </div>
+        ),
     }
 ]);

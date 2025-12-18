@@ -5,17 +5,14 @@ import useAuth from '../../../hooks/useAuth'
 //mawa@gmail.com
 const Navbar = () => {
     const { user, logOut } = useAuth();
-    console.log(user);
     const navigate = useNavigate();
 
     const handleLogOut = () => {
         logOut()
             .then(res => {
-                console.log(res);
                 navigate('/login')
             })
             .catch(error => {
-                console.log(error)
             })
     }
     const links = <>

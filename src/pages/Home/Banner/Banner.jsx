@@ -44,7 +44,8 @@ const Banner = () => {
                 <div className="flex-1 flex justify-center">
                     <img
                         // src="https://cdni.iconscout.com/illustration/premium/thumb/donate-blood-5698357-4755211.png"
-                        src="https://cdn-icons-png.flaticon.com/512/2965/2965567.png"
+                        src="https://images.pexels.com/photos/12820063/pexels-photo-12820063.jpeg"
+                        // src="https://images.pexels.com/photos/12227659/pexels-photo-12227659.jpeg"
                         alt="Blood Donation Illustration"
                         className="w-72 md:w-96 drop-shadow-xl"
                     />

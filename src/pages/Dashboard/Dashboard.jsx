@@ -9,19 +9,13 @@ const Dashboard = () => {
     if (role === 'admin') {
         return <AdminDashboardHome />
     }
-    if (role === 'volunteer') {
+    else if (role === 'volunteer') {
         return <AdminDashboardHome />
     }
-    if (role === 'donor') {
-        return <DonorDashboard />
+    else (role === 'donor')
+    return <DonorDashboard />
 
-    }
-    return (
 
-        <div>
-
-        </div>
-    )
 }
 
 export default Dashboard
