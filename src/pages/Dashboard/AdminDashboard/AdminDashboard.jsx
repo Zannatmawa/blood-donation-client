@@ -12,7 +12,6 @@ export default function AdminDashboardHome() {
     const { data: allUsersInfo = [] } = useQuery({
         queryKey: ['myDonationRequest', user?.email],
         queryFn: async () => {
-            //http://localhost:3000/my-donation-req/
             const res = await axiosSecure.get(`/all-users`);
             return res.data;
         }

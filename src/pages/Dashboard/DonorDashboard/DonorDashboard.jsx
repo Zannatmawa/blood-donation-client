@@ -23,6 +23,22 @@ const DonorDashboard = () => {
             return res.data.slice(0, 3);
         }
     })
+
+    const { data: donorInfo = [] } = useQuery({
+        queryKey: ['donorInfo'],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/donor-collections`);
+            return res.data;
+        }
+    })
+    const req = donationRequest.map(r => r._id)
+    console.log(req)
+    const DonorInfo = donorInfo.filter(i => i._id === donationRequest._id)
+    console.log(DonorInfo)
+
+
+
+
     const deleteDonationReq = (id) => {
         axiosSecure.delete(`/my-donation-requests/${id}`,)
             .then(res => {
@@ -70,6 +86,12 @@ const DonorDashboard = () => {
                                                     <ul
                                                         tabIndex="-1"
                                                         className="menu dropdown-content bg-red-600 rounded-box z-1 mt-5 w-52 p-5 shadow-sm">
+                                                        <button className="border mt-10 border-red-600  px-6 py-3 rounded-md font-semibold" onClick={() => document.getElementById('my_modal_1').showModal()}>donor Info</button>
+                                                        <dialog id="my_modal_1" className="modal">
+                                                            <div className="modal-box">
+                                                                <p>marufa</p>
+                                                            </div>
+                                                        </dialog>
                                                         <button className='btn btn-sm '>done</button>
                                                         <button className='btn btn-sm '>cancel</button>
                                                     </ul>
@@ -77,7 +99,7 @@ const DonorDashboard = () => {
 
                                             </>
                                         }
-                                        <th>
+                                        <td>
                                             <button
                                                 onClick={() => navigate(`/dashboard/edit-donation-request/${r._id}`)}
                                                 className="btn btn-sm mr-2"
@@ -90,7 +112,8 @@ const DonorDashboard = () => {
                                             >
                                                 <FaTrashCan />
                                             </button>
-                                            <Link to={`/dashboard/view-donation-req/${r._id}`} className='btn btn-sm  mr-2'><FaEye /></Link>                                        </th>
+                                            <Link to={`/dashboard/view-donation-req/${r._id}`} className='btn btn-sm  mr-2'><FaEye /></Link>
+                                        </td>
 
                                     </th>
                                 </tr>)

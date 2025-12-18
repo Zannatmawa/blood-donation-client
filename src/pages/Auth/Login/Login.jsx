@@ -10,14 +10,12 @@ const Login = () => {
     const location = useLocation();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const handleLogin = (data) => {
-        console.log(data);
         loginUser(data.email, data.password)
             .then(res => {
                 navigate(location?.state || '/');
-                console.log(res.user);
             })
             .catch(errors => {
-                console.log(errors)
+                alert('invalid')
             })
 
     }

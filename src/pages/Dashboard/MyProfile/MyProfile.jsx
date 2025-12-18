@@ -3,14 +3,15 @@ import useAuth from '../../../hooks/useAuth';
 import useAxios from '../../../hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { useLoaderData } from 'react-router';
+import { useLoaderData, useNavigate } from 'react-router';
 import Notiflix from 'notiflix';
 
 const MyProfile = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    const { user } = useAuth();
+    const { user, updateUserProfile } = useAuth();
     const axiosSecure = useAxios();
     const allDistricts = useLoaderData();
+    const navigate = useNavigate();
 
     const districts = allDistricts[0].data;
     const [districtId, setDistrictId] = useState("");
@@ -39,23 +40,67 @@ const MyProfile = () => {
     }
     // const profileImg = data.photo[0]
 
-    const handleUpdateProfile = (data) => {
-        console.log(data);
-        axiosSecure.patch(`/all-users/${user.email}`, data)
-            .then(res => {
-                refetch();
-                if (res.data.modifiedCount) {
-                    Notiflix.Notify.success('Operation successful!');
-                    Notiflix.Confirm.show(
-                        'Confirm',
-                        'Are you sure?',
-                        'Yes',
-                        'No',
-                        () => console.log('Confirmed'),
-                    );
-                }
-            })
-    }
+    // const handleUpdateProfile = (data) => {
+    //     const profileImg = data.photo[0]
+    //     registerUser(data.email, data.password)
+    //         .then(res => {
+    //             //store the ig and get the photo url         
+    //             const formData = new FormData();
+    //             console.log(formData)
+    //             formData.append('image', profileImg);
+    //             const imageAPIURL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host}`
+    //             axios.post(imageAPIURL, formData)
+    //                 .then(res => {
+    //                     const photoURL = res.data.data.url;
+    //                     //create user int the db
+    //                     const userInfo = {
+    //                         email: data.email,
+    //                         displayName: data.name,
+    //                         photoURL: res.data.data.url,
+    //                         bloodGroup: data.blood,
+    //                         district: data.district,
+    //                         upazilla: data.upazilla,
+    //                     }
+    //                     axiosSecure.post('/all-users', userInfo)
+    //                         .then(res => {
+    //                             if (res.data.insertedId) {
+    //                                 console.log('first')
+    //                             }
+    //                         })
+    //                     //update user profile
+    //                     const userProfile = {
+    //                         displayName: data.name,
+    //                         photoURL: res.data.data.url,
+    //                     }
+    //                     updateUserProfile(userProfile)
+    //                         .then(() => {
+    //                             console.log('first');
+    //                             navigate(location.state || '/')
+    //                         })
+    //                         .catch(err => {
+    //                             console.log(err)
+    //                         })
+    //                 })
+    //         })
+    //         .catch(err => {
+    //             console.log(err)
+    //         })
+    //     console.log(data);
+    //     axiosSecure.patch(`/all-users/${user.email}`, data)
+    //         .then(res => {
+    //             refetch();
+    //             if (res.data.modifiedCount) {
+    //                 Notiflix.Notify.success('Operation successful!');
+    //                 Notiflix.Confirm.show(
+    //                     'Confirm',
+    //                     'Are you sure?',
+    //                     'Yes',
+    //                     'No',
+    //                     () => console.log('Confirmed'),
+    //                 );
+    //             }
+    //         })
+    // }
 
     return (
         <div className="max-w-3xl mx-auto p-6 shadow rounded bg-white">
