@@ -64,62 +64,66 @@ const AllDonationRequest = () => {
     }
 
     return (
-        <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-            <h2>All reqy:{donationRequest.length}</h2>
-            <table className="table">
-                {/* head */}
-                <thead>
-                    <tr>
-                        <th> Recipient name</th>
-                        <th>Location</th>
-                        <th>Blood group</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Status</th>
-                        <th>View button</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {/* row 1 */}
-                    {
-                        donationRequest.map(r =>
-                            <tr key={r._id}>
-                                <th>{r.recipientName}</th>
-                                <th>{r.fullAddress}</th>
-                                <th>{r.bloodGroup}</th>
-                                <th>{r.donationDate}</th>
-                                <th>{r.donationTime}</th>
-                                <th className={`${r.status === 'inprogress' ? ' text-yellow-500' : 'text-red-600'}`}>{r.status}</th>
-                                <th className='text-red-600'>
-                                    {role === 'volunteer' ? <button onClick={() => handleInProgress(r)} className='btn'>
-                                        inprogress
-                                    </button> : <>
-                                        <button onClick={() => handleInProgress(r)} className='btn'>
-                                            inprogress
-                                        </button>
-                                        <button
-                                            onClick={() => navigate(`/dashboard/edit-donation-request/${r._id}`)}
-                                            className="btn btn-sm"
-                                        >
-                                            <RiEditBoxLine />
-                                        </button>
-                                        <button
-                                            onClick={() => deleteDonationReq(r._id)}
-                                            className="btn btn-sm"
-                                        >
-                                            <FaTrashCan />
-                                        </button>
-                                        <button className='btn btn-sm '>
-                                            <FaEye />
-                                        </button>
-                                    </>}
+        <>
+            <h2 className='text-3xl font-bold mb-5'>All Donation Request</h2>
 
-                                </th>
-                            </tr>)
-                    }
-                </tbody>
-            </table>
-        </div>
+            <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+                <table className="table">
+                    {/* head */}
+                    <thead>
+                        <tr>
+                            <th> Recipient name</th>
+                            <th>Location</th>
+                            <th>Blood group</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <th>View button</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {/* row 1 */}
+                        {
+                            donationRequest.map(r =>
+                                <tr key={r._id}>
+                                    <th>{r.recipientName}</th>
+                                    <th>{r.fullAddress}</th>
+                                    <th>{r.bloodGroup}</th>
+                                    <th>{r.donationDate}</th>
+                                    <th>{r.donationTime}</th>
+                                    <th className={`${r.status === 'inprogress' ? ' text-yellow-500' : 'text-red-600'}`}>{r.status}</th>
+                                    <th className='text-red-600'>
+                                        {role === 'volunteer' ? <button onClick={() => handleInProgress(r)} className='btn'>
+                                            inprogress
+                                        </button> : <>
+                                            <button onClick={() => handleInProgress(r)} className='btn'>
+                                                inprogress
+                                            </button>
+                                            <button
+                                                onClick={() => navigate(`/dashboard/edit-donation-request/${r._id}`)}
+                                                className="btn btn-sm"
+                                            >
+                                                <RiEditBoxLine />
+                                            </button>
+                                            <button
+                                                onClick={() => deleteDonationReq(r._id)}
+                                                className="btn btn-sm"
+                                            >
+                                                <FaTrashCan />
+                                            </button>
+                                            <button className='btn btn-sm '>
+                                                <FaEye />
+                                            </button>
+                                        </>}
+
+                                    </th>
+                                </tr>)
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </>
     )
 }
 

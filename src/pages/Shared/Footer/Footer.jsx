@@ -1,27 +1,36 @@
 import React from 'react'
+import { NavLink } from 'react-router'
+import { FaXTwitter } from "react-icons/fa6";
+import { CiFacebook } from "react-icons/ci";
+import { CiYoutube } from "react-icons/ci";
+
 
 const Footer = () => {
     return (
         <footer className="footer sm:footer-horizontal bg-[#D32F2F] text-white p-10">
             <nav>
-                <h6 className="footer-title">Services</h6>
-                <a className="link link-hover">Branding</a>
-                <a className="link link-hover">Design</a>
-                <a className="link link-hover">Marketing</a>
-                <a className="link link-hover">Advertisement</a>
+                <div className='flex flex-col justify-center items-center'>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 11c1.657 0 3-1.567 3-3.5S13.657 4 12 4 9 5.567 9 7.5 10.343 11 12 11z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5.5 21a10.4 10.4 0 0113 0M21 12l-1.5 1.5M3 12l1.5 1.5" />
+                    </svg>
+                    <div className='text-white '>
+                        <span>Blood</span>
+                        <span>Bridge</span>
+                    </div>
+                </div>
+
             </nav>
             <nav>
-                <h6 className="footer-title">Company</h6>
-                <a className="link link-hover">About us</a>
-                <a className="link link-hover">Contact</a>
-                <a className="link link-hover">Jobs</a>
-                <a className="link link-hover">Press kit</a>
+                <NavLink className="mr-5" to="/">Home</NavLink>
+                <NavLink className="mr-5" to="/pending-donation-requests">BLood Donation Requests</NavLink>
+                <NavLink className="mr-5" to="/funding">Funding</NavLink>
+
             </nav>
             <nav>
-                <h6 className="footer-title">Legal</h6>
-                <a className="link link-hover">Terms of use</a>
-                <a className="link link-hover">Privacy policy</a>
-                <a className="link link-hover">Cookie policy</a>
+                <a className="link link-hover text-2xl"><CiYoutube /></a>
+                <a className="link link-hover text-2xl"><FaXTwitter /></a>
+                <a className="link link-hover text-2xl">                <CiFacebook /></a>
             </nav>
             <form>
                 <h6 className="footer-title">Newsletter</h6>

@@ -57,7 +57,7 @@ const CreateDonationRequest = () => {
 
     return (
         <div>
-            <h2 className='text-5xl font-bold'>Create Donation Request</h2>
+            <h2 className='text-3xl font-bold'>Create Donation Request</h2>
 
             <form onSubmit={handleSubmit(handleDonationReq)} className='mt-12 p-4'>
 
