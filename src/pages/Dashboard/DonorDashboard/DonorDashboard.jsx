@@ -1,4 +1,5 @@
-import React from 'react'
+import Notiflix from "notiflix";
+
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
 import { useNavigate } from "react-router";
@@ -38,15 +39,18 @@ const DonorDashboard = () => {
 
 
 
-
     const deleteDonationReq = (id) => {
-        axiosSecure.delete(`/my-donation-requests/${id}`,)
+        axiosSecure.delete(`/my-donation-requests/${id}`)
             .then(res => {
                 if (res.data.deletedCount > 0) {
-                    alert('deleted')
-                    // swal.fire("Deleted!", "Donation request removed", "success");
-                    refetch(); // or navigate
+                    Notiflix.Notify.success("Donation request deleted successfully!");
+                    refetch();
+                } else {
+                    Notiflix.Notify.warning("No donation request was deleted!");
                 }
+            })
+            .catch(error => {
+                Notiflix.Notify.failure("Failed to delete donation request!", error);
             });
     }
     return (
@@ -79,27 +83,27 @@ const DonorDashboard = () => {
                                     <th>{r.donationTime}</th>
                                     <th className={`${r.status === 'inprogress' ? 'text-yellow-500' : 'text-red-600'}`}>{r.status}</th>
                                     <th>
-                                        {
-                                            r.status === 'inprogress' && <>
-                                                <div className="dropdown dropdown-end">
-                                                    <div tabIndex={0} role="button" className="btn btn-ghost rounded-field"><BsThreeDotsVertical /></div>
-                                                    <ul
-                                                        tabIndex="-1"
-                                                        className="menu dropdown-content bg-red-600 rounded-box z-1 mt-5 w-52 p-5 shadow-sm">
-                                                        <button className="border mt-10 border-red-600  px-6 py-3 rounded-md font-semibold" onClick={() => document.getElementById('my_modal_1').showModal()}>donor Info</button>
-                                                        <dialog id="my_modal_1" className="modal">
-                                                            <div className="modal-box">
-                                                                <p>marufa</p>
-                                                            </div>
-                                                        </dialog>
-                                                        <button className='btn btn-sm '>done</button>
-                                                        <button className='btn btn-sm '>cancel</button>
-                                                    </ul>
-                                                </div>
-
-                                            </>
-                                        }
                                         <td>
+                                            {
+                                                r.status === 'inprogress' && <>
+                                                    <div className="dropdown dropdown-end">
+                                                        <div tabIndex={0} role="button" className="btn btn-ghost rounded-field"><BsThreeDotsVertical /></div>
+                                                        <ul
+                                                            tabIndex="-1"
+                                                            className="menu dropdown-content bg-base-200 rounded-box z-1 mt-5 w-52 p-5 shadow-sm">
+                                                            <button className="border mt-10 border-red-600  px-6 py-3 rounded-md font-semibold" onClick={() => document.getElementById('my_modal_1').showModal()}>donor Info</button>
+                                                            <dialog id="my_modal_1" className="modal">
+                                                                <div className="modal-box">
+                                                                    <p>marufa</p>
+                                                                </div>
+                                                            </dialog>
+                                                            <button className='btn btn-sm mb-2 mt-2'>done</button>
+                                                            <button className='btn btn-sm mb-2'>cancel</button>
+                                                        </ul>
+                                                    </div>
+
+                                                </>
+                                            }
                                             <button
                                                 onClick={() => navigate(`/dashboard/edit-donation-request/${r._id}`)}
                                                 className="btn btn-sm mr-2"
@@ -114,7 +118,6 @@ const DonorDashboard = () => {
                                             </button>
                                             <Link to={`/dashboard/view-donation-req/${r._id}`} className='btn btn-sm  mr-2'><FaEye /></Link>
                                         </td>
-
                                     </th>
                                 </tr>)
                         }

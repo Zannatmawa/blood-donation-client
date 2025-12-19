@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import useAuth from '../../../hooks/useAuth'
-import axios from 'axios';
-import { Link, useLoaderData, useLocation, useNavigate } from 'react-router';
+import Notiflix from "notiflix";
+import { Link, useLoaderData } from 'react-router';
 import useAxios from '../../../hooks/useAxios';
-import swal from 'sweetalert2';
+import { useQuery } from '@tanstack/react-query';
 
 const CreateDonationRequest = () => {
     const { user } = useAuth();
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const axiosSecure = useAxios()
-    // const location = useLocation();
-    // const navigate = useNavigate();
+    const { register, handleSubmit } = useForm();
+    const axiosSecure = useAxios();
+    const { data: allUsers = [] } = useQuery({
+        queryKey: ['userProfile', user?.email],
+        queryFn: async () => {
+            const res = await axiosSecure.get('/all-users')
+            return res.data
+        },
+        enabled: !!user?.email
+    })
+    const filteringBlockedUser = allUsers.filter(f => f.status === 'blocked')
+
 
     const allDistricts = useLoaderData();
     const districts = allDistricts[0].data;
@@ -28,14 +36,23 @@ const CreateDonationRequest = () => {
     }, []);
     const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
-    const handleDonationReq = (data) => {
-        console.log(data)
-        axiosSecure.post('/my-donation-requests', data)
-            .then(res => {
 
-            })
-            .catch(error => console.log(error))
-    }
+    const handleDonationReq = (data) => {
+        if (filteringBlockedUser) {
+            Notiflix.Notify.failure("You are blocked!");
+        } else {
+            axiosSecure.post('/my-donation-requests', data)
+                .then(res => {
+                    Notiflix.Notify.success("Donation request sent successfully!");
+                    console.log(res.data);
+                })
+                .catch(error => {
+                    Notiflix.Notify.failure("Something went wrong!");
+                    console.log(error);
+                });
+            console.log(data);
+        }
+    };
 
 
     return (

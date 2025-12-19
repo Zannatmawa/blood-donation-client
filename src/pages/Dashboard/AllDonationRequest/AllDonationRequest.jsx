@@ -1,5 +1,5 @@
 import React from 'react'
-// import useAuth from '../../../hooks/useAuth'
+import Notiflix from "notiflix";
 import useAxios from '../../../hooks/useAxios';
 // import { IoPersonRemoveSharp } from 'react-icons/io5';
 import { FaEye, FaUserCheck } from 'react-icons/fa';
@@ -25,36 +25,44 @@ const AllDonationRequest = () => {
             return res.data;
         }
     })
+
     const handleUpdateStatus = (donation, status) => {
-        const updateInfo = { status: status }
-        console.log(status)
+        const updateInfo = { status: status };
+        console.log(status);
+
         axiosSecure.patch(`/all-blood-donation-request/${donation._id}`, updateInfo)
             .then(res => {
                 if (res.data.modifiedCount) {
                     refetch();
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: "success",
-                        title: `Rider has been approved ${status}!`,
-                        showConfirmButton: false,
-                        timer: 2000
-                    });
+                    Notiflix.Notify.success(`Rider status updated to "${status}"!`);
+                } else {
+                    Notiflix.Notify.warning(`No changes made to the status.`);
                 }
             })
+            .catch(error => {
+                Notiflix.Notify.failure("Failed to update the status!", error);
+            });
     }
+
     const handleInProgress = (donation) => {
         handleUpdateStatus(donation, 'inprogress')
     }
+
     const deleteDonationReq = (id) => {
-        axiosSecure.delete(`/my-donation-requests/${id}`,)
+        axiosSecure.delete(`/my-donation-requests/${id}`)
             .then(res => {
                 if (res.data.deletedCount > 0) {
-                    alert('deleted')
-                    // swal.fire("Deleted!", "Donation request removed", "success");
-                    refetch(); // or navigate
+                    Notiflix.Notify.success("Donation request deleted successfully!");
+                    refetch();
+                } else {
+                    Notiflix.Notify.warning("No donation request was deleted!");
                 }
+            })
+            .catch(error => {
+                Notiflix.Notify.failure("Failed to delete donation request!", error);
             });
     }
+
     return (
         <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
             <h2>All reqy:{donationRequest.length}</h2>
