@@ -3,13 +3,15 @@ import useAxios from '../../hooks/useAxios';
 import useAuth from '../../hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import useRole from '../../hooks/useRole';
+import useTitle from '../../components/UseTitle';
 
 const Funding = () => {
+    useTitle("Fundings");
     const { role } = useRole();
     const { user } = useAuth();
     const axiosSecure = useAxios();
 
-    const { refetch, data: allFunding = [] } = useQuery({
+    const { data: allFunding = [] } = useQuery({
         queryKey: ['funding', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/save-funding`);

@@ -9,12 +9,13 @@ import { RiProgress1Line } from "react-icons/ri";
 
 import Swal from 'sweetalert2';
 import { useQuery } from '@tanstack/react-query'
-import { Link, useNavigate } from 'react-router';
+import { Link } from 'react-router';
 import useAxios from '../../hooks/useAxios';
 import useRole from '../../hooks/useRole';
+import useTitle from '../../components/UseTitle';
 
 const PendingDontaionRequest = () => {
-    // const { user } = useAuth();
+    useTitle("Blood Dontaion request");
     const { role } = useRole();
     const axiosSecure = useAxios();
     const { data: donationRequest = [] } = useQuery({
