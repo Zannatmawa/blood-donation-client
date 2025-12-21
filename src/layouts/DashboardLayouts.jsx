@@ -8,7 +8,7 @@ import {
     LogOut,
     Menu
 } from "lucide-react";
-import { Link, Outlet } from "react-router";
+import { Link, Outlet, useNavigate } from "react-router";
 import MyProfile from "../pages/Dashboard/MyProfile/MyProfile";
 import useAuth from "../hooks/useAuth";
 import useRole from "../hooks/useRole";
@@ -16,7 +16,17 @@ import useRole from "../hooks/useRole";
 export default function Sidebar() {
     const { role } = useRole();
     const [open, setOpen] = useState(true);
-    const { user } = useAuth();
+    const { user, logOut } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogOut = () => {
+        logOut()
+            .then(res => {
+                navigate('/login')
+            })
+            .catch(error => {
+            })
+    }
 
     return (
         <div className="flex">
@@ -48,7 +58,7 @@ export default function Sidebar() {
                         <User size={20} /> <span className={open ? "block" : "hidden"}><Link to='/dashboard/my-profile'>My Profile</Link></span>
                     </li>
                     <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
-                        <User size={20} /> <span className={open ? "block" : "hidden"}><Link to='/dashboard/create-donation-req'>Create Donation request</Link></span>
+                        <ClipboardList size={20} /> <span className={open ? "block" : "hidden"}><Link to='/dashboard/create-donation-req'>Create Donation request</Link></span>
                     </li>
                     <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
                         <User size={20} /> <span className={open ? "block" : "hidden"}><Link to='/dashboard/my-dontaion-req'>My Donation request</Link></span>
@@ -70,11 +80,6 @@ export default function Sidebar() {
                     {/* //for admin and vol */}
 
                     <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
-                        <ClipboardList size={20} />
-                        <span className={open ? "block" : "hidden"}>Donation History</span>
-                    </li>
-
-                    <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
                         <Settings size={20} />
                         <span className={open ? "block" : "hidden"}>Settings</span>
                     </li>
@@ -85,7 +90,7 @@ export default function Sidebar() {
                 <div className="absolute bottom-8 w-full">
                     <div className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
                         <LogOut size={20} />
-                        <span className={open ? "block" : "hidden"}>Logout</span>
+                        <Link onClick={`handleLogOut} className="btn bg-red-600 text-white ${open ? " block" : "hidden"}`}>Logout</Link>
                     </div>
                 </div>
 
@@ -96,6 +101,6 @@ export default function Sidebar() {
                 <Outlet></Outlet>
             </div>
 
-        </div>
+        </div >
     );
 }

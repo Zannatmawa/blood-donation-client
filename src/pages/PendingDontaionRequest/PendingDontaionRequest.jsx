@@ -27,41 +27,45 @@ const PendingDontaionRequest = () => {
     })
     const pendingReq = donationRequest.filter(req => req.status === 'pending')
     return (
-        <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-            <h2>All pending request:{donationRequest.length}</h2>
-            <table className="table">
-                {/* head */}
-                <thead>
-                    <tr>
-                        <th> Recipient name</th>
-                        <th>Location</th>
-                        <th>Blood group</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Status</th>
-                        <th>View button</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {/* row 1 */}
-                    {
-                        pendingReq.map(r =>
-                            <tr key={r._id}>
-                                <th>{r.recipientName}</th>
-                                <th>{r.fullAddress}</th>
-                                <th>{r.bloodGroup}</th>
-                                <th>{r.donationDate}</th>
-                                <th>{r.donationTime}</th>
-                                <th className={`${r.status === 'inprogress' ? ' text-yellow-500' : 'text-red-600'}`}>{r.status}</th>
-                                <th>
-                                    <Link to={`/dashboard/view-donation-req/${r._id}`} className='btn btn-sm '><FaEye /></Link>
-                                </th>
+        <>
+            <h2 className='my-5 underline text-center text-3xl font-bold text-red-600'>Donation Requests</h2>
 
-                            </tr>)
-                    }
-                </tbody>
-            </table>
-        </div>
+            <div className="m-10  overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+                <table className="table">
+                    {/* head */}
+                    <thead>
+                        <tr>
+                            <th> Recipient name</th>
+                            <th>Location</th>
+                            <th>Blood group</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <th>View button</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {/* row 1 */}
+                        {
+                            pendingReq.map(r =>
+                                <tr key={r._id}>
+                                    <th>{r.recipientName}</th>
+                                    <th>{r.fullAddress}</th>
+                                    <th>{r.bloodGroup}</th>
+                                    <th>{r.donationDate}</th>
+                                    <th>{r.donationTime}</th>
+                                    <th className={`${r.status === 'inprogress' ? ' text-yellow-500' : 'text-red-600'}`}>{r.status}</th>
+                                    <th>
+                                        <Link to={`/dashboard/view-donation-req/${r._id}`} className='btn btn-sm '><FaEye /></Link>
+                                    </th>
+
+                                </tr>)
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </>
+
     )
 }
 

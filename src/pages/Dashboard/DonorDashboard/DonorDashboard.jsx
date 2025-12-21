@@ -1,5 +1,4 @@
 import Notiflix from "notiflix";
-
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
 import { useNavigate } from "react-router";

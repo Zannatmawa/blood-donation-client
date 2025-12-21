@@ -35,14 +35,15 @@ const Funding = () => {
     };
 
     return (
-        <>
-            <div>
-                <button onClick={handleGiveFund} className="border mt-3 bg-red-600 text-white mx-4 px-6 py-3 rounded-md font-semibold">give fund</button>
+        <div>
+            <div className='flex justify-between items-center m-10'>
+                <h2 className=' underline text-center text-3xl font-bold text-red-600'>Funding</h2>
+                <button onClick={handleGiveFund} className="border bg-red-600 text-white mx-4 px-6 py-3 rounded-md font-semibold">give fund</button>
             </div>
             {user.email ? <div className="overflow-x-auto">
-                <table className="table table-zebra">
+                <table className="table table-zebra mx-5">
                     {/* head */}
-                    <thead>
+                    <thead className='bg-red-100'>
                         <tr>
                             <th>Name</th>
                             <th>Fund amount</th>
@@ -64,7 +65,7 @@ const Funding = () => {
                 </table>
             </div> : <p></p>}
 
-        </>
+        </div>
 
     )
 }

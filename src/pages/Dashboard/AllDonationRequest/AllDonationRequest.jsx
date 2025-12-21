@@ -10,7 +10,7 @@ import { RiProgress1Line } from "react-icons/ri";
 
 import Swal from 'sweetalert2';
 import { useQuery } from '@tanstack/react-query'
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import useRole from '../../../hooks/useRole';
 
 const AllDonationRequest = () => {
@@ -111,9 +111,8 @@ const AllDonationRequest = () => {
                                             >
                                                 <FaTrashCan />
                                             </button>
-                                            <button className='btn btn-sm '>
-                                                <FaEye />
-                                            </button>
+                                            <Link to={`/dashboard/view-donation-req/${r._id}`} className='btn btn-sm  mr-2'><FaEye /></Link>
+
                                         </>}
 
                                     </th>
