@@ -1,70 +1,64 @@
-Live Link: https://blood-donation-center-b0020.web.app/
+🌐 Live Website
 
-The Blood Donation Application is a user-friendly web platform designed to connect blood donors with individuals in need of blood. It streamlines the blood donation process by enabling donors to register, manage their profiles, and respond to blood donation requests efficiently.
+🔗 https://blood-donation-center-b0020.web.app/
 
-Features
+<h1 align="center">🩸 Blood Donation Application</h1>
 
-User (Donor) Registration & Authentication
+<p align="center">
+  A user-friendly MERN Stack web platform that connects blood donors with individuals in need,
+  making the blood donation process faster, safer, and more efficient.
+</p>
 
-Create and Manage Blood Donation Requests
+<p align="center">
+  <a href="https://blood-donation-center-b0020.web.app/" target="_blank">
+    🔗 Live Demo
+  </a>
+</p>
 
-Donor Profile Management
+<p align="center">
+  <img src="https://img.shields.io/badge/MERN-Stack-green" />
+  <img src="https://img.shields.io/badge/Status-Active-success" />
+  <img src="https://img.shields.io/badge/Frontend-React-blue" />
+  <img src="https://img.shields.io/badge/Backend-Node.js-brightgreen" />
+</p>
 
-Role-Based Access Control (Admin, Donor, User)
+---
 
-Content Management System (CMS)
+## 📌 About the Project
+The **Blood Donation Application** is a full-stack web platform designed to simplify and manage blood donation activities.
+It connects **donors** with **people in need of blood** by providing an organized system for registration, donation requests,
+and donor management.
 
-Secure API with Authentication
+The application ensures a seamless experience with secure authentication, role-based access control,
+and a responsive user interface.
 
-Responsive User Interface
+---
 
+## 🚀 Features
+- User (Donor) Registration & Authentication
+- Create and Manage Blood Donation Requests
+- Donor Profile Management
+- Role-Based Access Control (Admin, Donor, User)
+- Content Management System (CMS)
+- Secure API with Authentication
+- Fully Responsive User Interface
 
-**Tech Stack:**
+---
 
-**Frontend:**
+## 🛠️ Tech Stack
 
-React
+| Category | Technologies |
+|--------|-------------|
+| Frontend | React, JavaScript, Tailwind CSS, DaisyUI |
+| Backend | Node.js, Express.js |
+| Database | MongoDB |
+| Authentication | JWT / Firebase Authentication |
 
-Tailwind CSS / DaisyUI
+---
 
-JavaScript
+## ⚙️ Installation & Setup
 
-**Backend**:
-
-Node.js
-
-Express.js
-
-Database
-
-MongoDB
-
-**Authentication**
-
-JWT / Firebase Auth (update based on what you used)
-
-Install dependencies
-
-Frontend:
-
-cd client
-npm install
-npm run dev
-
-
-Backend:
-
-cd server
-npm install
-npm run start
-
-
-
-
-
-
-
-
-
-
-
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/your-username/blood-donation-app.git
+cd blood-donation-app
