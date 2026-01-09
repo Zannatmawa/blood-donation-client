@@ -34,7 +34,7 @@ export default function FeaturedArticles() {
     if (loading) return <FeaturedArticlesSkeleton />;
 
     return (
-        <section className="bg-[#FFF9F6] py-20">
+        <section className="bg-[#FFF9F6] py-20 my-10">
             <div className="max-w-7xl mx-auto px-6">
 
                 <div className="text-center mb-12">

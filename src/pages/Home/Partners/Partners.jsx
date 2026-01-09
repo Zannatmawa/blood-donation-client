@@ -1,55 +1,58 @@
-// Partners.jsx
+import dmch from "../../../assets/partners/dh.png";
+import redCrescent from "../../../assets/partners/red.jpg";
+import squareHospital from "../../../assets/partners/square.png";
+import brac from "../../../assets/partners/dh.png";
+
 const partners = [
     {
         name: "Dhaka Medical College Hospital",
-        logo: "https://i.ibb.co/6Jj9QYk/hospital.png",
+        logo: dmch,
     },
     {
-        name: "Bangladesh Red Crescent",
-        logo: "https://i.ibb.co/9Z8F5jR/red-crescent.png",
+        name: "Bangladesh Red Crescent Society",
+        logo: redCrescent,
     },
     {
         name: "Square Hospital",
-        logo: "https://i.ibb.co/7JXhYJQ/hospital-2.png",
+        logo: squareHospital,
     },
     {
         name: "BRAC Health Program",
-        logo: "https://i.ibb.co/jJpK6PZ/brac.png",
+        logo: brac,
     },
 ];
 
 const Partners = () => {
     return (
-        <section className="py-20 bg-base-100">
+        <section className="py-20 my-10 bg-[#FFF9F6]">
             <div className="max-w-7xl mx-auto px-6">
 
-                {/* Section Title */}
-                <div className="text-center mb-12">
-                    <h2 className="text-3xl md:text-4xl font-bold">
+                <div className="text-center mb-14">
+                    <h2 className="text-3xl md:text-4xl font-bold text-[#D32F2F]">
                         Our Trusted Partners
                     </h2>
-                    <p className="mt-3 text-base-content/70">
-                        Working together with hospitals and organizations to save lives
+                    <p className="mt-3 text-gray-600 max-w-xl mx-auto">
+                        Collaborating with leading hospitals and organizations to save lives.
                     </p>
                 </div>
 
-                {/* Partners Grid */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8">
                     {partners.map((partner, index) => (
                         <div
                             key={index}
-                            className="card bg-base-200 shadow hover:shadow-lg transition"
+                            className="bg-white rounded-2xl p-6 flex flex-col items-center justify-center text-center shadow-md hover:shadow-xl transition hover:ring-2 hover:ring-[#D32F2F]/40"
                         >
-                            <div className="card-body items-center text-center">
+                            <div className="w-full h-24 flex items-center justify-center mb-4">
                                 <img
                                     src={partner.logo}
                                     alt={partner.name}
-                                    className="h-16 object-contain mb-4"
+                                    className="h-20 object-contain"
                                 />
-                                <h3 className="font-semibold text-sm">
-                                    {partner.name}
-                                </h3>
                             </div>
+
+                            <h3 className="font-semibold text-sm text-gray-700">
+                                {partner.name}
+                            </h3>
                         </div>
                     ))}
                 </div>

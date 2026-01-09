@@ -30,7 +30,7 @@ const steps = [
 
 const HowItWorks = () => {
     return (
-        <section className="py-20 bg-base-100">
+        <section className="py-20 my-10 bg-base-100">
             <div className="max-w-7xl mx-auto px-6">
 
                 {/* Section Header */}
