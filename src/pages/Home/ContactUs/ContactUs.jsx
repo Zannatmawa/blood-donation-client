@@ -4,7 +4,12 @@ export default function ContactSection() {
             <div className="max-w-6xl mx-auto px-6">
                 {/* bg-linear-to-r from-red-900 to-red-900 */}
                 <div className="text-center mb-12">
-                    <h2 className="text-3xl font-bold text-gray-800">Contact Us</h2>
+                    <h2
+                        className="text-3xl md:text-4xl font-bold"
+                        style={{ color: "#D32F2F" }}
+                    >
+                        Contact Us
+                    </h2>
                     <p className="text-gray-600 mt-2">
                         Have questions or need help? Get in touch with us.
                     </p>

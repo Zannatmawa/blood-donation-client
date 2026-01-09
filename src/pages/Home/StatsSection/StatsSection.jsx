@@ -15,7 +15,10 @@ const BloodStats = () => {
 
                 {/* Section Title */}
                 <div className="text-center mb-12">
-                    <h2 className="text-3xl md:text-4xl font-bold">
+                    <h2
+                        className="text-3xl md:text-4xl font-bold"
+                        style={{ color: "#D32F2F" }}
+                    >
                         Blood Availability Status
                     </h2>
                     <p className="mt-3 text-base-content/70">
@@ -53,12 +56,12 @@ const BloodStats = () => {
 
                     <div className="stat bg-base-100 shadow rounded-box">
                         <div className="stat-title">Successful Donations</div>
-                        <div className="stat-value text-secondary">980+</div>
+                        <div className="stat-value text-primary">980+</div>
                     </div>
 
                     <div className="stat bg-base-100 shadow rounded-box">
                         <div className="stat-title">Lives Saved</div>
-                        <div className="stat-value text-accent">2,900+</div>
+                        <div className="stat-value text-primary">2,900+</div>
                     </div>
                 </div>
 
