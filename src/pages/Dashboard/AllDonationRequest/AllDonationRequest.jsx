@@ -34,7 +34,7 @@ const AllDonationRequest = () => {
             .then(res => {
                 if (res.data.modifiedCount) {
                     refetch();
-                    Notiflix.Notify.success(`Rider status updated to "${status}"!`);
+                    Notiflix.Notify.success(`Donar status updated to "${status}"!`);
                 } else {
                     Notiflix.Notify.warning(`No changes made to the status.`);
                 }
@@ -66,62 +66,99 @@ const AllDonationRequest = () => {
     return (
         <>
             <h2 className='text-3xl font-bold mb-5'>All Donation Request</h2>
-
-            <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-                <table className="table">
-                    {/* head */}
-                    <thead>
+            <div className="overflow-x-auto rounded-xl border border-[#D32F2F]/20 bg-white shadow-lg">
+                <table className="table w-full">
+                    <thead className="bg-[#D32F2F] text-white">
                         <tr>
-                            <th> Recipient name</th>
+                            <th className="rounded-tl-xl">Recipient Name</th>
                             <th>Location</th>
-                            <th>Blood group</th>
+                            <th>Blood Group</th>
                             <th>Date</th>
                             <th>Time</th>
                             <th>Status</th>
-                            <th>View button</th>
+                            <th className="rounded-tr-xl">Actions</th>
                         </tr>
                     </thead>
+
                     <tbody>
-                        {/* row 1 */}
-                        {
-                            donationRequest.map(r =>
-                                <tr key={r._id}>
-                                    <th>{r.recipientName}</th>
-                                    <th>{r.fullAddress}</th>
-                                    <th>{r.bloodGroup}</th>
-                                    <th>{r.donationDate}</th>
-                                    <th>{r.donationTime}</th>
-                                    <th className={`${r.status === 'inprogress' ? ' text-yellow-500' : 'text-red-600'}`}>{r.status}</th>
-                                    <th className='text-red-600'>
-                                        {role === 'volunteer' ? <button onClick={() => handleInProgress(r)} className='btn'>
-                                            inprogress
-                                        </button> : <>
-                                            <button onClick={() => handleInProgress(r)} className='btn'>
-                                                inprogress
+                        {donationRequest.map(r => (
+                            <tr key={r._id} className="hover:bg-[#FFF1F1] transition">
+                                <td className="font-semibold text-gray-800">
+                                    {r.recipientName}
+                                </td>
+
+                                <td className="text-gray-600">
+                                    {r.fullAddress}
+                                </td>
+
+                                <td>
+                                    <span className="px-3 py-1 rounded-full text-sm font-bold bg-[#D32F2F]/10 text-[#D32F2F]">
+                                        {r.bloodGroup}
+                                    </span>
+                                </td>
+
+                                <td className="text-gray-600">
+                                    {r.donationDate}
+                                </td>
+
+                                <td className="text-gray-600">
+                                    {r.donationTime}
+                                </td>
+
+                                <td>
+                                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${r.status === 'inprogress'
+                                        ? 'bg-yellow-100 text-yellow-600'
+                                        : 'bg-red-100 text-red-600'
+                                        }`}>
+                                        {r.status}
+                                    </span>
+                                </td>
+
+                                <td className="flex flex-wrap gap-2">
+                                    {role === 'volunteer' ? (
+                                        <button
+                                            onClick={() => handleInProgress(r)}
+                                            className="btn btn-sm bg-[#D32F2F] text-white"
+                                        >
+                                            In Progress
+                                        </button>
+                                    ) : (
+                                        <>
+                                            <button
+                                                onClick={() => handleInProgress(r)}
+                                                className="btn btn-sm bg-[#D32F2F] text-white"
+                                            >
+                                                In Progress
                                             </button>
+
                                             <button
                                                 onClick={() => navigate(`/dashboard/edit-donation-request/${r._id}`)}
-                                                className="btn btn-sm"
+                                                className="btn btn-sm bg-blue-500 text-white"
                                             >
                                                 <RiEditBoxLine />
                                             </button>
+
                                             <button
                                                 onClick={() => deleteDonationReq(r._id)}
-                                                className="btn btn-sm"
+                                                className="btn btn-sm bg-red-600 text-white"
                                             >
                                                 <FaTrashCan />
                                             </button>
-                                            <Link to={`/dashboard/view-donation-req/${r._id}`} className='btn btn-sm  mr-2'><FaEye /></Link>
 
-                                        </>}
-
-                                    </th>
-                                </tr>)
-                        }
+                                            <Link
+                                                to={`/dashboard/view-donation-req/${r._id}`}
+                                                className="btn btn-sm bg-gray-800 text-white"
+                                            >
+                                                <FaEye />
+                                            </Link>
+                                        </>
+                                    )}
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
-
         </>
     )
 }

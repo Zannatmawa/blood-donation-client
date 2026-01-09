@@ -107,135 +107,166 @@ const AllUsersInfo = () => {
                 </ul>
             </div>
 
-            {filterUser.length === 0 ?
-                <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-                    <div className="overflow-x-auto">
-                        <table className="table">
-                            {/* head */}
-                            <thead>
-                                <tr>
-                                    <th> User avatar</th>
-                                    <th>User email</th>
-                                    <th> User name</th>
-                                    <th>User role</th>
-                                    <th>status</th>
-                                    <th> button</th>
-                                    <th> others</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {/* row 1 */}
-                                {
-                                    allUsersInfo.map(user =>
-                                        <tr key={user._id}>
-                                            <td>
-                                                <div className="flex items-center gap-3">
-                                                    <div className="avatar">
-                                                        <div className="mask mask-squircle h-12 w-12">
-                                                            <img
-                                                                src={user.photoURL}
-                                                                alt={user.displayName} />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>{user.email}</td>
-                                            <td>{user.displayName}</td>
-                                            <td className={`${user.role === 'volunteer' ? "text-green-600 font-bold " : " text-black font-bold "}`}>{user.role}</td>
-                                            <td className={`${user.status === 'blocked' ? "text-red-600 font-bold " : " text-green-600 font-bold "}`}>{user.status}</td>
-                                            <th>
-                                                {user.status === 'active' ?
-                                                    <button onClick={() => handleBlock(user)} className="btn btn-ghost text-white btn-sm bg-red-600">
-                                                        <FaUserAltSlash />
-                                                    </button> :
-                                                    <button onClick={() => handleRemoveBlock(user)} className="btn btn-ghost text-white btn-sm bg-green-600">
-                                                        <FaUserCheck />
-                                                    </button>
-                                                }
-                                            </th>
-                                            <td>
-                                                <div className="dropdown dropdown-end">
-                                                    <div tabIndex={0} role="button" className="btn btn-ghost rounded-field"><BsThreeDotsVertical /></div>
-                                                    <ul
-                                                        tabIndex="-1"
-                                                        className="menu dropdown-content bg-red-600 rounded-box z-1 mt-5 w-52 p-5 shadow-sm">
-                                                        <button onClick={() => handleMakeVolunter(user)} className='btn btn-sm mb-3'>Make Volunteer</button>
-                                                        <button onClick={() => handleMakeAdmin(user)} className='btn btn-sm'>Make Admin</button>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    )
-                                }
+            {filterUser.length === 0 ? (
+                <div className="overflow-x-auto rounded-xl border border-[#D32F2F]/20 bg-white shadow-lg">
+                    <table className="table w-full">
+                        <thead className="bg-[#D32F2F] text-white">
+                            <tr>
+                                <th className="rounded-tl-xl">User Avatar</th>
+                                <th>User Email</th>
+                                <th>User Name</th>
+                                <th>User Role</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                                <th className="rounded-tr-xl">Others</th>
+                            </tr>
+                        </thead>
 
-                            </tbody>
-                        </table>
-                    </div>
-                </div > :
-                <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-                    <div className="overflow-x-auto">
-                        <table className="table">
-                            {/* head */}
-                            <thead>
-                                <tr>
-                                    <th> User avatar</th>
-                                    <th>User email</th>
-                                    <th> User name</th>
-                                    <th>User role</th>
-                                    <th>status</th>
-                                    <th> button</th>
-                                    <th> others</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {/* row 1 */}
-                                {
-                                    filterUser.map(user =>
-                                        <tr key={user._id}>
-                                            <td>
-                                                <div className="flex items-center gap-3">
-                                                    <div className="avatar">
-                                                        <div className="mask mask-squircle h-12 w-12">
-                                                            <img
-                                                                src={user.photoURL}
-                                                                alt={user.displayName} />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>{user.email}</td>
-                                            <td>{user.displayName}</td>
-                                            <td className={`${user.role === 'volunteer' ? "text-green-600 font-bold " : " text-black font-bold "}`}>{user.role}</td>
-                                            <td className={`${user.status === 'blocked' ? "text-red-600 font-bold " : " text-green-600 font-bold "}`}>{user.status}</td>
-                                            <th>
-                                                {user.status === 'active' ?
-                                                    <button onClick={() => handleBlock(user)} className="btn btn-ghost text-white btn-sm bg-red-600">
-                                                        <FaUserAltSlash />
-                                                    </button> :
-                                                    <button onClick={() => handleRemoveBlock(user)} className="btn btn-ghost text-white btn-sm bg-green-600">
-                                                        <FaUserCheck />
-                                                    </button>
-                                                }
-                                            </th>
-                                            <td>
-                                                <div className="dropdown dropdown-end">
-                                                    <div tabIndex={0} role="button" className="btn btn-ghost rounded-field"><BsThreeDotsVertical /></div>
-                                                    <ul
-                                                        tabIndex="-1"
-                                                        className="menu dropdown-content bg-red-600 rounded-box z-1 mt-5 w-52 p-5 shadow-sm">
-                                                        <button onClick={() => handleMakeVolunter(user)} className='btn btn-sm mb-3'>Make Volunteer</button>
-                                                        <button onClick={() => handleMakeAdmin(user)} className='btn btn-sm'>Make Admin</button>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    )
-                                }
+                        <tbody>
+                            {allUsersInfo.map(user => (
+                                <tr key={user._id} className="hover:bg-[#FFF1F1] transition">
+                                    <td>
+                                        <div className="avatar">
+                                            <div className="mask mask-squircle h-12 w-12">
+                                                <img src={user.photoURL} alt={user.displayName} />
+                                            </div>
+                                        </div>
+                                    </td>
 
-                            </tbody>
-                        </table>
-                    </div>
-                </div >}
+                                    <td className="text-gray-700">{user.email}</td>
+                                    <td className="font-semibold">{user.displayName}</td>
+
+                                    <td>
+                                        <span className={`px-3 py-1 rounded-full text-sm font-bold ${user.role === 'volunteer'
+                                                ? 'bg-green-100 text-green-600'
+                                                : 'bg-gray-200 text-gray-800'
+                                            }`}>
+                                            {user.role}
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <span className={`px-3 py-1 rounded-full text-sm font-bold ${user.status === 'blocked'
+                                                ? 'bg-red-100 text-red-600'
+                                                : 'bg-green-100 text-green-600'
+                                            }`}>
+                                            {user.status}
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        {user.status === 'active' ? (
+                                            <button onClick={() => handleBlock(user)} className="btn btn-sm bg-red-600 text-white">
+                                                <FaUserAltSlash />
+                                            </button>
+                                        ) : (
+                                            <button onClick={() => handleRemoveBlock(user)} className="btn btn-sm bg-green-600 text-white">
+                                                <FaUserCheck />
+                                            </button>
+                                        )}
+                                    </td>
+
+                                    <td>
+                                        <div className="dropdown dropdown-end">
+                                            <div tabIndex={0} role="button" className="btn btn-sm btn-ghost">
+                                                <BsThreeDotsVertical />
+                                            </div>
+                                            <ul className="menu dropdown-content bg-white rounded-xl w-52 p-4 shadow-xl border border-[#D32F2F]/20">
+                                                <button onClick={() => handleMakeVolunter(user)} className="btn btn-sm mb-2 bg-[#D32F2F] text-white">
+                                                    Make Volunteer
+                                                </button>
+                                                <button onClick={() => handleMakeAdmin(user)} className="btn btn-sm bg-gray-800 text-white">
+                                                    Make Admin
+                                                </button>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            ) : (
+                <div className="overflow-x-auto rounded-xl border border-[#D32F2F]/20 bg-white shadow-lg">
+                    <table className="table w-full">
+                        <thead className="bg-[#D32F2F] text-white">
+                            <tr>
+                                <th className="rounded-tl-xl">User Avatar</th>
+                                <th>User Email</th>
+                                <th>User Name</th>
+                                <th>User Role</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                                <th className="rounded-tr-xl">Others</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {filterUser.map(user => (
+                                <tr key={user._id} className="hover:bg-[#FFF1F1] transition">
+                                    <td>
+                                        <div className="avatar">
+                                            <div className="mask mask-squircle h-12 w-12">
+                                                <img src={user.photoURL} alt={user.displayName} />
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td className="text-gray-700">{user.email}</td>
+                                    <td className="font-semibold">{user.displayName}</td>
+
+                                    <td>
+                                        <span className={`px-3 py-1 rounded-full text-sm font-bold ${user.role === 'volunteer'
+                                                ? 'bg-green-100 text-green-600'
+                                                : 'bg-gray-200 text-gray-800'
+                                            }`}>
+                                            {user.role}
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <span className={`px-3 py-1 rounded-full text-sm font-bold ${user.status === 'blocked'
+                                                ? 'bg-red-100 text-red-600'
+                                                : 'bg-green-100 text-green-600'
+                                            }`}>
+                                            {user.status}
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        {user.status === 'active' ? (
+                                            <button onClick={() => handleBlock(user)} className="btn btn-sm bg-red-600 text-white">
+                                                <FaUserAltSlash />
+                                            </button>
+                                        ) : (
+                                            <button onClick={() => handleRemoveBlock(user)} className="btn btn-sm bg-green-600 text-white">
+                                                <FaUserCheck />
+                                            </button>
+                                        )}
+                                    </td>
+
+                                    <td>
+                                        <div className="dropdown dropdown-end">
+                                            <div tabIndex={0} role="button" className="btn btn-sm btn-ghost">
+                                                <BsThreeDotsVertical />
+                                            </div>
+                                            <ul className="menu dropdown-content bg-white rounded-xl w-52 p-4 shadow-xl border border-[#D32F2F]/20">
+                                                <button onClick={() => handleMakeVolunter(user)} className="btn btn-sm mb-2 bg-[#D32F2F] text-white">
+                                                    Make Volunteer
+                                                </button>
+                                                <button onClick={() => handleMakeAdmin(user)} className="btn btn-sm bg-gray-800 text-white">
+                                                    Make Admin
+                                                </button>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
+
         </>
     )
 }

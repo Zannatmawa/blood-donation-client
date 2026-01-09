@@ -39,7 +39,7 @@ const PendingDontaionRequest = () => {
     }
     return (
         <>
-            <h2 className='my-5 underline text-center text-3xl font-bold text-red-600'>Donation Requests</h2>
+            <h2 className='my-5  text-center text-3xl font-bold text-red-600'>Donation Requests</h2>
             <label className="input ml-10">
                 <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <g

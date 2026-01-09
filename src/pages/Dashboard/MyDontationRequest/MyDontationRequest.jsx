@@ -35,73 +35,121 @@ const MyDontationRequest = () => {
         <>
             <h2 className='text-3xl font-bold mb-5'>My Donation Request</h2>
 
-            <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-
-                <table className="table">
-                    {/* head */}
-                    <thead>
+            <div className="overflow-x-auto rounded-xl border border-[#D32F2F]/20 bg-white shadow-lg">
+                <table className="table w-full">
+                    <thead className="bg-[#D32F2F] text-white">
                         <tr>
-                            <th> Recipient name</th>
+                            <th className="rounded-tl-xl">Recipient Name</th>
                             <th>Location</th>
-                            <th>Blood group</th>
+                            <th>Blood Group</th>
                             <th>Date</th>
                             <th>Time</th>
                             <th>Status</th>
-                            <th>View button</th>
+                            <th className="rounded-tr-xl">Actions</th>
                         </tr>
                     </thead>
+
                     <tbody>
-                        {/* row 1 */}
-                        {
-                            donationRequest.map(r =>
-                                <tr key={r._id}>
-                                    <th>{r.recipientName}</th>
-                                    <th>{r.fullAddress}</th>
-                                    <th>{r.bloodGroup}</th>
-                                    <th>{r.donationDate}</th>
-                                    <th>{r.donationTime}</th>
-                                    <th className={`${r.status === 'inprogress' ? 'text-yellow-500' : 'text-red-600'}`}>{r.status}</th>
-                                    <td>
-                                        {
-                                            r.status === 'inprogress' && <>
-                                                <div className="dropdown dropdown-end">
-                                                    <div tabIndex={0} role="button" className="btn btn-ghost rounded-field"><BsThreeDotsVertical /></div>
-                                                    <ul
-                                                        tabIndex="-1"
-                                                        className="menu dropdown-content bg-base-200 rounded-box z-1 mt-5 w-52 p-5 shadow-sm">
-                                                        <button className="border mt-10 border-red-600  px-6 py-3 rounded-md font-semibold" onClick={() => document.getElementById('my_modal_1').showModal()}>donor Info</button>
-                                                        <dialog id="my_modal_1" className="modal">
-                                                            <div className="modal-box">
-                                                                <p>marufa</p>
-                                                            </div>
-                                                        </dialog>
-                                                        <button className='btn btn-sm  mb-2 mt-2'>done</button>
-                                                        <button className='btn btn-sm mb-2 '>cancel</button>
-                                                    </ul>
-                                                </div>
+                        {donationRequest.map(r => (
+                            <tr
+                                key={r._id}
+                                className="hover:bg-[#FFF1F1] transition"
+                            >
+                                <td className="font-semibold text-gray-800">
+                                    {r.recipientName}
+                                </td>
 
-                                            </>
-                                        }
-                                        <button
-                                            onClick={() => navigate(`/dashboard/edit-donation-request/${r._id}`)}
-                                            className="btn btn-sm mr-2"
-                                        >
-                                            <RiEditBoxLine />
-                                        </button>
-                                        <button
-                                            onClick={() => deleteDonationReq(r._id)}
-                                            className="btn btn-sm mr-2"
-                                        >
-                                            <FaTrashCan />
-                                        </button>
-                                        <Link to={`/dashboard/view-donation-req/${r._id}`} className='btn btn-sm  mr-2'><FaEye /></Link>
-                                    </td>
-                                </tr>)
-                        }
+                                <td className="text-gray-600">
+                                    {r.fullAddress}
+                                </td>
 
+                                <td>
+                                    <span className="px-3 py-1 rounded-full text-sm font-bold bg-[#D32F2F]/10 text-[#D32F2F]">
+                                        {r.bloodGroup}
+                                    </span>
+                                </td>
+
+                                <td className="text-gray-600">
+                                    {r.donationDate}
+                                </td>
+
+                                <td className="text-gray-600">
+                                    {r.donationTime}
+                                </td>
+
+                                <td>
+                                    <span
+                                        className={`px-3 py-1 rounded-full text-xs font-semibold
+                            ${r.status === 'inprogress'
+                                                ? 'bg-yellow-100 text-yellow-600'
+                                                : 'bg-red-100 text-red-600'
+                                            }`}
+                                    >
+                                        {r.status}
+                                    </span>
+                                </td>
+
+                                <td className="flex flex-wrap gap-2">
+                                    {r.status === 'inprogress' && (
+                                        <div className="dropdown dropdown-end">
+                                            <div tabIndex={0} role="button" className="btn btn-sm btn-ghost">
+                                                <BsThreeDotsVertical />
+                                            </div>
+                                            <ul
+                                                tabIndex="-1"
+                                                className="menu dropdown-content bg-white rounded-xl w-52 p-4 shadow-xl border border-[#D32F2F]/20"
+                                            >
+                                                <button
+                                                    className="w-full mb-2 bg-[#D32F2F] text-white py-2 rounded-md font-semibold"
+                                                    onClick={() => document.getElementById('my_modal_1').showModal()}
+                                                >
+                                                    Donor Info
+                                                </button>
+
+                                                <dialog id="my_modal_1" className="modal">
+                                                    <div className="modal-box">
+                                                        <p>marufa</p>
+                                                    </div>
+                                                </dialog>
+
+                                                <button className="btn btn-sm mb-2 bg-green-500 text-white">
+                                                    Done
+                                                </button>
+
+                                                <button className="btn btn-sm bg-red-500 text-white">
+                                                    Cancel
+                                                </button>
+                                            </ul>
+                                        </div>
+                                    )}
+
+                                    <button
+                                        onClick={() => navigate(`/dashboard/edit-donation-request/${r._id}`)}
+                                        className="btn btn-sm bg-blue-500 text-white"
+                                    >
+                                        <RiEditBoxLine />
+                                    </button>
+
+                                    <button
+                                        onClick={() => deleteDonationReq(r._id)}
+                                        className="btn btn-sm bg-red-600 text-white"
+                                    >
+                                        <FaTrashCan />
+                                    </button>
+
+                                    <Link
+                                        to={`/dashboard/view-donation-req/${r._id}`}
+                                        className="btn btn-sm bg-gray-800 text-white"
+                                    >
+                                        <FaEye />
+                                    </Link>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
+
             <div className="join mt-5">
                 <input
                     className="join-item btn btn-square"
