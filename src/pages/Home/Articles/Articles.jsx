@@ -1,3 +1,6 @@
+import { Link } from "react-router";
+import FeaturedArticlesSkeleton from "./ArticleSkeleton";
+
 const articles = [
     {
         id: 1,
@@ -17,14 +20,23 @@ const articles = [
         date: "Sep 08, 2025",
         image: "https://images.pexels.com/photos/5340267/pexels-photo-5340267.jpeg",
     },
+    {
+        id: 4,
+        title: "How Blood Donation Helps Emergency Patients",
+        date: "Sep 07, 2025",
+        image: "https://images.pexels.com/photos/7653095/pexels-photo-7653095.jpeg",
+    },
 ];
 
 export default function FeaturedArticles() {
+    const loading = false; // change to true to test skeleton
+
+    if (loading) return <FeaturedArticlesSkeleton />;
+
     return (
         <section className="bg-[#FFF9F6] py-20">
-            <div className="max-w-6xl mx-auto px-6">
+            <div className="max-w-7xl mx-auto px-6">
 
-                {/* Heading */}
                 <div className="text-center mb-12">
                     <h2 className="text-3xl font-bold text-gray-800">
                         Featured Articles
@@ -34,8 +46,7 @@ export default function FeaturedArticles() {
                     </p>
                 </div>
 
-                {/* Articles */}
-                <div className="grid md:grid-cols-3 gap-8">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     {articles.map((article) => (
                         <div
                             key={article.id}
@@ -55,9 +66,12 @@ export default function FeaturedArticles() {
                                     {article.title}
                                 </h3>
 
-                                <button className="mt-4 text-red-600 font-semibold hover:underline">
+                                <Link
+                                    to={`/articleDetails/${article.id}`}
+                                    className="inline-block mt-4 text-[#D32F2F] font-semibold hover:underline"
+                                >
                                     Read More →
-                                </button>
+                                </Link>
                             </div>
                         </div>
                     ))}

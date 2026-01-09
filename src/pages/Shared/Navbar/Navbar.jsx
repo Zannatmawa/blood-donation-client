@@ -19,6 +19,8 @@ const Navbar = () => {
         <NavLink className="mr-5" to="/">Home</NavLink>
         <NavLink className="mr-5" to="/pending-donation-requests">BLood Donation Requests</NavLink>
         <NavLink className="mr-5" to="/funding">Funding</NavLink>
+        <NavLink className="mr-5" to="/articles">Articles</NavLink>
+        <NavLink className="mr-5" to="/services">Services</NavLink>
     </>
     return (
         <div className="navbar text-primary font-bold  bg-base-200 shadow-sm">

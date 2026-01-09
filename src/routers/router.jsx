@@ -20,6 +20,9 @@ import ViewDonationReq from "../pages/Dashboard/ViewDonationReq/ViewDonationReq"
 import Funding from "../pages/Funding/Funding";
 import PaymentSuccess from "../pages/Dashboard/Payments/PaymentSuccess";
 import AdminVolunteerRoute from "./VolunteerRoute";
+import Services from "../pages/Home/Service/Service";
+import FeaturedArticles from "../pages/Home/Articles/Articles";
+import ArticleDetails from "../pages/Home/Articles/ArticleDetails";
 
 
 
@@ -54,6 +57,18 @@ export const router = createBrowserRouter([
             {
                 path: '/funding',
                 element: <PrivateRoute><Funding /></PrivateRoute>
+            },
+            {
+                path: '/services',
+                element: <PrivateRoute><Services /></PrivateRoute>
+            },
+            {
+                path: '/articles',
+                element: <PrivateRoute><FeaturedArticles /></PrivateRoute>
+            },
+            {
+                path: '/articleDetails/:id',
+                element: <PrivateRoute><ArticleDetails /></PrivateRoute>
             }
         ]
     },
