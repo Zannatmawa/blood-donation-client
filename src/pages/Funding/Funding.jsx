@@ -37,32 +37,36 @@ const Funding = () => {
     return (
         <div>
             <div className='flex justify-between items-center m-10'>
-                <h2 className=' underline text-center text-3xl font-bold text-red-600'>Funding</h2>
+                <h2 className=' text-center text-3xl font-bold text-red-600'>Funding</h2>
                 <button onClick={handleGiveFund} className="border bg-red-600 text-white mx-4 px-6 py-3 rounded-md font-semibold">give fund</button>
             </div>
-            {user.email ? <div className="overflow-x-auto">
-                <table className="table table-zebra mx-5">
-                    {/* head */}
-                    <thead className='bg-red-100'>
+            {user.email ? <div className="overflow-x-auto my-10">
+                <table className="table w-full table-zebra mx-5 rounded-xl border border-[#D32F2F]/20 bg-white shadow-lg">
+                    <thead className="bg-[#D32F2F] text-white">
                         <tr>
-                            <th>Name</th>
-                            <th>Fund amount</th>
-                            <th>Funding date</th>
+                            <th className="rounded-tl-xl">Name</th>
+                            <th>Fund Amount</th>
+                            <th className="rounded-tr-xl">Funding Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {/* row 1 */}
-                        {allFunding.map(funding =>
-                            <tr>
-                                <th>{funding.name}</th>
-                                <th>{funding.amount}</th>
+                        {allFunding.map(funding => (
+                            <tr key={funding._id} className="hover:bg-[#FFF1F1] transition">
+                                <td className="font-semibold text-gray-800">{funding.name}</td>
                                 <td>
+                                    <span className="px-3 py-1 rounded-full text-sm font-bold bg-[#D32F2F]/10 text-[#D32F2F]">
+                                        ৳ {funding.amount}
+                                    </span>
+                                </td>
+                                <td className="text-gray-600">
                                     {new Date(funding.date).toISOString().slice(0, 10)}
                                 </td>
-                            </tr>)}
-
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
+
+
             </div> : <p></p>}
 
         </div>
