@@ -28,3 +28,16 @@ const Home = () => {
 }
 
 export default Home
+
+//  <div className="dropdown">
+//                 <div tabIndex={0} role="button" className="btn btn-ghost ">
+//                     <p>Filter by </p>
+//                 </div>
+//                 <ul
+//                     tabIndex="-1"
+//                     className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+//                     <li><a>Item 1</a></li>
+
+//                     <li><a>Item 3</a></li>
+//                 </ul>
+//             </div>

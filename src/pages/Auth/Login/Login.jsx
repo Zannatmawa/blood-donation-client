@@ -5,7 +5,7 @@ import Logo from '../../../components/Logo/Logo';
 import useAuth from '../../../hooks/useAuth';
 
 const Login = () => {
-    const { loginUser } = useAuth();
+    const { loginUser, user } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -46,10 +46,11 @@ const Login = () => {
                         <input
                             type="email"
                             {...register('email', { required: true })}
+                            defaultValue={user?.email}
                             className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none"
                             placeholder="Enter your email"
                         />
-                        {errors.email?.type === 'required' && <p className='text-red-600'>Email is required</p>}
+                        {errors.email?.type === 'required' && <p className='text-red-600 text-sm mt-2'>Email is required!</p>}
 
                     </div>
 
@@ -65,8 +66,8 @@ const Login = () => {
                             className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none"
                             placeholder="Enter your password"
                         />
-                        {errors.password?.type === 'required' && <p className='text-red-600'>Password is required</p>}
-                        {errors.password?.type === 'minLength' && <p className='text-red-600'>Password must be 6 character!</p>}
+                        {errors.password?.type === 'required' && <p className='text-red-600 text-sm mt-2'>Password is required</p>}
+                        {errors.password?.type === 'minLength' && <p className='text-red-600 text-sm mt-2'>Password must be 6 character!</p>}
                     </div>
 
                     {/* <!-- Remember --> */}
@@ -103,3 +104,13 @@ const Login = () => {
 }
 
 export default Login
+
+
+
+// const { data: allUsersInfo = [] } = useQuery({
+//     queryKey: ['myDonationRequest', user?.email],
+//     queryFn: async () => {
+//         const res = await axiosSecure.get(`/all-users`);
+//         return res.data;
+//     }
+// })

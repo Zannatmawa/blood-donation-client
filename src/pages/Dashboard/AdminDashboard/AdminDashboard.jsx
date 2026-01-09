@@ -15,6 +15,13 @@ export default function AdminDashboardHome() {
             return res.data;
         }
     })
+    const { data: donationRequest = [] } = useQuery({
+        queryKey: ['allDonationRequest', 'pending'],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/all-blood-donation-request`);
+            return res.data;
+        }
+    })
     return (
         <div className="p-6 md:p-10 bg-gray-100 min-h-screen">
 
@@ -48,7 +55,7 @@ export default function AdminDashboardHome() {
                         <Droplets className="text-red-600" size={28} />
                     </div>
                     <div>
-                        <h3 className="text-2xl font-bold text-gray-800">865</h3>
+                        <h3 className="text-2xl font-bold text-gray-800">{donationRequest.length}</h3>
                         <p className="text-gray-600">Blood Donations</p>
                     </div>
                 </div>

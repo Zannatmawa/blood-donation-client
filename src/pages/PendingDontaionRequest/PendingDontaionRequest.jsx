@@ -56,74 +56,116 @@ const PendingDontaionRequest = () => {
                 <input onChange={handleReqChange} type="search" required placeholder="Search by address or blood group or name" />
             </label>
             {search === '' ?
-                <div className="m-10  overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-                    <table className="table">
-                        {/* head */}
-                        <thead>
+                <div className="m-10 overflow-x-auto rounded-2xl border border-[#D32F2F]/20 bg-white shadow-lg">
+                    <table className="table w-full min-w-[800px]">
+                        <thead className="bg-[#D32F2F] text-white">
                             <tr>
-                                <th> Recipient name</th>
-                                <th>Location</th>
-                                <th>Blood group</th>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Status</th>
-                                <th>View button</th>
+                                <th className="py-3 px-4 rounded-tl-2xl">Recipient Name</th>
+                                <th className="py-3 px-4">Location</th>
+                                <th className="py-3 px-4">Blood Group</th>
+                                <th className="py-3 px-4">Date</th>
+                                <th className="py-3 px-4">Time</th>
+                                <th className="py-3 px-4">Status</th>
+                                <th className="py-3 px-4 rounded-tr-2xl">View</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {/* row 1 */}
-                            {
-                                pendingReq.map(r =>
-                                    <tr key={r._id}>
-                                        <th>{r.recipientName}</th>
-                                        <th>{r.fullAddress}</th>
-                                        <th>{r.bloodGroup}</th>
-                                        <th>{r.donationDate}</th>
-                                        <th>{r.donationTime}</th>
-                                        <th className={`${r.status === 'inprogress' ? ' text-yellow-500' : 'text-red-600'}`}>{r.status}</th>
-                                        <th>
-                                            <Link to={`/dashboard/view-donation-req/${r._id}`} className='btn btn-sm '><FaEye /></Link>
-                                        </th>
-
-                                    </tr>)
-                            }
+                            {pendingReq.map((r) => (
+                                <tr
+                                    key={r._id}
+                                    className="hover:bg-[#D32F2F]/10 transition-colors"
+                                >
+                                    <td className="py-3 px-4 font-medium">{r.recipientName}</td>
+                                    <td className="py-3 px-4">{r.fullAddress}</td>
+                                    <td className="py-3 px-4 font-semibold">{r.bloodGroup}</td>
+                                    <td className="py-3 px-4">{r.donationDate}</td>
+                                    <td className="py-3 px-4">{r.donationTime}</td>
+                                    <td className="py-3 px-4">
+                                        <span
+                                            className={`px-2 py-1 rounded-full text-sm font-semibold ${r.status === "inprogress"
+                                                ? "bg-yellow-100 text-yellow-700"
+                                                : r.status === "completed"
+                                                    ? "bg-green-100 text-green-700"
+                                                    : "bg-red-100 text-red-600"
+                                                }`}
+                                        >
+                                            {r.status}
+                                        </span>
+                                    </td>
+                                    <td className="py-3 px-4">
+                                        <Link
+                                            to={`/dashboard/view-donation-req/${r._id}`}
+                                            className="btn btn-sm bg-[#D32F2F] border-none hover:bg-red-700 text-white"
+                                        >
+                                            <FaEye />
+                                        </Link>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div> :
-                <div className="m-10  overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-                    <table className="table">
-                        {/* head */}
-                        <thead>
+                <div className="m-10 overflow-x-auto rounded-2xl border border-[#D32F2F]/20 bg-white shadow-lg">
+                    <table className="table w-full min-w-[800px]">
+                        <thead className="bg-[#D32F2F] text-white">
                             <tr>
-                                <th> Recipient name</th>
-                                <th>Location</th>
-                                <th>Blood group</th>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Status</th>
-                                <th>View button</th>
+                                <th className="py-3 px-4 rounded-tl-2xl">Recipient Name</th>
+                                <th className="py-3 px-4">Location</th>
+                                <th className="py-3 px-4">Blood Group</th>
+                                <th className="py-3 px-4">Date</th>
+                                <th className="py-3 px-4">Time</th>
+                                <th className="py-3 px-4">Status</th>
+                                <th className="py-3 px-4 rounded-tr-2xl">View</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {/* row 1 */}
-                            {
-                                search.map(r =>
-                                    <tr key={r._id}>
-                                        <th>{r.recipientName}</th>
-                                        <th>{r.fullAddress}</th>
-                                        <th>{r.bloodGroup}</th>
-                                        <th>{r.donationDate}</th>
-                                        <th>{r.donationTime}</th>
-                                        <th className={`${r.status === 'inprogress' ? ' text-yellow-500' : 'text-red-600'}`}>{r.status}</th>
-                                        <th>
-                                            <Link to={`/dashboard/view-donation-req/${r._id}`} className='btn btn-sm '><FaEye /></Link>
-                                        </th>
-
-                                    </tr>)
-                            }
+                            {search.map((r) => (
+                                <tr
+                                    key={r._id}
+                                    className="hover:bg-[#D32F2F]/10 transition-colors"
+                                >
+                                    <td className="py-3 px-4 font-medium">{r.recipientName}</td>
+                                    <td className="py-3 px-4">{r.fullAddress}</td>
+                                    <td className="py-3 px-4 font-semibold">{r.bloodGroup}</td>
+                                    <td className="py-3 px-4">{r.donationDate}</td>
+                                    <td className="py-3 px-4">{r.donationTime}</td>
+                                    <td className="py-3 px-4">
+                                        <span
+                                            className={`px-2 py-1 rounded-full text-sm font-semibold ${r.status === "inprogress"
+                                                ? "bg-yellow-100 text-yellow-700"
+                                                : r.status === "completed"
+                                                    ? "bg-green-100 text-green-700"
+                                                    : "bg-red-100 text-red-600"
+                                                }`}
+                                        >
+                                            {r.status}
+                                        </span>
+                                    </td>
+                                    <td className="py-3 px-4">
+                                        <Link
+                                            to={`/dashboard/view-donation-req/${r._id}`}
+                                            className="btn btn-sm bg-[#D32F2F] border-none hover:bg-red-700 text-white"
+                                        >
+                                            <FaEye />
+                                        </Link>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>}
+
+            <div className="join mt-5 mb-5 flex justify-center gap-2">
+                <input
+                    className="join-item btn btn-square"
+                    type="radio"
+                    name="options"
+                    aria-label="1"
+                    checked="checked" />
+                <input className="join-item btn btn-square" type="radio" name="options" aria-label="2" />
+                <input className="join-item btn btn-square" type="radio" name="options" aria-label="3" />
+                <input className="join-item btn btn-square" type="radio" name="options" aria-label="4" />
+            </div>
         </>
 
     )
