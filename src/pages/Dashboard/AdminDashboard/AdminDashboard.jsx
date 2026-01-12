@@ -3,6 +3,9 @@ import useRole from "../../../hooks/useRole";
 import useAuth from "../../../hooks/useAuth";
 import useAxios from "../../../hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
+import { PieChart, Pie, Tooltip, Legend, ResponsiveContainer, Cell } from "recharts";
+const colors = ['#D32F2F', '#FF5252', '#FF8A80', '#B71C1C', '#FFCDD2']; // shades of red
+
 
 export default function AdminDashboardHome() {
     const { role } = useRole();
@@ -22,6 +25,15 @@ export default function AdminDashboardHome() {
             return res.data;
         }
     })
+    const bloodData = donationRequest.reduce((acc, curr) => {
+        const found = acc.find(item => item.name === curr.bloodGroup);
+        if (found) {
+            found.value += 1;
+        } else {
+            acc.push({ name: curr.bloodGroup, value: 1 });
+        }
+        return acc;
+    }, []);
     return (
         <div className="p-6 md:p-10 bg-gray-100 min-h-screen">
 
@@ -72,6 +84,29 @@ export default function AdminDashboardHome() {
                 </div>
 
             </div>
+            {/* pie charts */}
+            <div className="bg-white p-5 rounded-xl shadow">
+                <h2 className="text-xl font-bold mb-4 text-gray-800">Blood Group Requests</h2>
+
+                <ResponsiveContainer width="100%" height={300}>
+                    <PieChart>
+                        <Pie
+                            data={bloodData}
+                            dataKey="value"
+                            nameKey="name"
+                            outerRadius={120}
+                            label
+                        >
+                            {bloodData.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+                            ))}
+                        </Pie>
+                        <Tooltip />
+                        <Legend />
+                    </PieChart>
+                </ResponsiveContainer>
+            </div>
+
 
         </div>
     );

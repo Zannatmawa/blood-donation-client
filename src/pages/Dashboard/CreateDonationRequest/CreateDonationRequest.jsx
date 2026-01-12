@@ -56,53 +56,50 @@ const CreateDonationRequest = () => {
 
 
     return (
-        <div>
-            <h2 className='text-3xl font-bold'>Create Donation Request</h2>
+        <div className="bg-white shadow-xl rounded-2xl p-8 max-w-5xl mx-auto my-10 border border-red-200">
+            <h2 className='text-3xl font-bold text-red-600 mb-6'>Create Donation Request</h2>
 
-            <form onSubmit={handleSubmit(handleDonationReq)} className='mt-12 p-4'>
+            <form onSubmit={handleSubmit(handleDonationReq)} className='space-y-8'>
 
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-12 my-8'>
-
-                    <fieldset className="fieldset">
-                        <label className="label">Requester Name</label>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
+                    <fieldset className="flex flex-col">
+                        <label className="label text-gray-700 font-semibold mb-2">Requester Name</label>
                         <input
                             type="text"
                             defaultValue={user?.displayName}
                             readOnly
-                            className="input w-full bg-gray-100"
+                            className="input w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500 focus:outline-none"
                             {...register("requesterName")}
                         />
                     </fieldset>
 
-                    <fieldset className="fieldset">
-                        <label className="label">Requester Email</label>
+                    <fieldset className="flex flex-col">
+                        <label className="label text-gray-700 font-semibold mb-2">Requester Email</label>
                         <input
                             type="email"
                             defaultValue={user?.email}
                             readOnly
-                            className="input w-full bg-gray-100"
+                            className="input w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500 focus:outline-none"
                             {...register("requesterEmail")}
                         />
                     </fieldset>
-
                 </div>
 
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-12 my-8'>
-
-                    <fieldset className="fieldset">
-                        <label className="label">Recipient Name</label>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
+                    <fieldset className="flex flex-col">
+                        <label className="label text-gray-700 font-semibold mb-2">Recipient Name</label>
                         <input
                             type="text"
-                            className="input w-full"
+                            className="input w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500 focus:outline-none"
                             placeholder="Recipient Name"
                             {...register("recipientName")}
                         />
                     </fieldset>
 
-                    <fieldset className="fieldset">
-                        <label className="label">Recipient District</label>
+                    <fieldset className="flex flex-col">
+                        <label className="label text-gray-700 font-semibold mb-2">Recipient District</label>
                         <select
-                            className="select w-full"
+                            className="select w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500 focus:outline-none"
                             {...register("recipientDistrict")}
                             onChange={(e) => setDistrictId(e.target.value)}
                         >
@@ -112,13 +109,12 @@ const CreateDonationRequest = () => {
                             ))}
                         </select>
                     </fieldset>
-
                 </div>
 
-                <fieldset className="fieldset">
-                    <label className="label">Recipient Upazilla</label>
+                <fieldset className="flex flex-col">
+                    <label className="label text-gray-700 font-semibold mb-2">Recipient Upazilla</label>
                     <select
-                        className="select w-full"
+                        className="select w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500 focus:outline-none"
                         {...register("recipientUpazilla")}
                     >
                         <option value="">Pick an Upazilla</option>
@@ -130,35 +126,32 @@ const CreateDonationRequest = () => {
                     </select>
                 </fieldset>
 
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-12 my-8'>
-
-                    <fieldset className="fieldset">
-                        <label className="label">Hospital Name</label>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
+                    <fieldset className="flex flex-col">
+                        <label className="label text-gray-700 font-semibold mb-2">Hospital Name</label>
                         <input
                             type="text"
-                            className="input w-full"
+                            className="input w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500 focus:outline-none"
                             placeholder="Dhaka Medical College Hospital"
                             {...register("hospitalName")}
                         />
                     </fieldset>
 
-                    <fieldset className="fieldset">
-                        <label className="label">Full Address</label>
+                    <fieldset className="flex flex-col">
+                        <label className="label text-gray-700 font-semibold mb-2">Full Address</label>
                         <input
                             type="text"
-                            className="input w-full"
+                            className="input w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500 focus:outline-none"
                             placeholder="Zahir Raihan Rd, Dhaka"
                             {...register("fullAddress")}
                         />
                     </fieldset>
-
                 </div>
 
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-12 my-8'>
-
-                    <fieldset className="fieldset">
-                        <label className="label">Blood Group</label>
-                        <select className="select w-full" {...register("bloodGroup")}>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
+                    <fieldset className="flex flex-col">
+                        <label className="label text-gray-700 font-semibold mb-2">Blood Group</label>
+                        <select className="select w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500 focus:outline-none" {...register("bloodGroup")}>
                             <option value="">Select Blood Group</option>
                             {bloodGroups.map(bg => (
                                 <option key={bg} value={bg}>{bg}</option>
@@ -166,42 +159,42 @@ const CreateDonationRequest = () => {
                         </select>
                     </fieldset>
 
-                    <fieldset className="fieldset">
-                        <label className="label">Donation Date</label>
+                    <fieldset className="flex flex-col">
+                        <label className="label text-gray-700 font-semibold mb-2">Donation Date</label>
                         <input
                             type="date"
-                            className="input w-full"
+                            className="input w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500 focus:outline-none"
                             {...register("donationDate")}
                         />
                     </fieldset>
-
                 </div>
 
-                <fieldset className="fieldset">
-                    <label className="label">Donation Time</label>
+                <fieldset className="flex flex-col">
+                    <label className="label text-gray-700 font-semibold mb-2">Donation Time</label>
                     <input
                         type="time"
-                        className="input w-full"
+                        className="input w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500 focus:outline-none"
                         {...register("donationTime")}
                     />
                 </fieldset>
 
-                <fieldset className="fieldset mt-8">
-                    <label className="label">Request Message</label>
+                <fieldset className="flex flex-col">
+                    <label className="label text-gray-700 font-semibold mb-2">Request Message</label>
                     <textarea
-                        className="textarea w-full"
+                        className="textarea w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500 focus:outline-none"
                         rows="4"
                         placeholder="Explain why you need blood..."
                         {...register("requestMessage")}
                     ></textarea>
                 </fieldset>
 
-                <button type='submit' className='btn btn-primary text-white mt-6'>
+                <button type='submit' className='btn w-full bg-red-600 hover:bg-red-700 text-white font-semibold mt-6 py-3 rounded-lg transition'>
                     Request
                 </button>
 
             </form>
         </div>
+
     )
 }
 

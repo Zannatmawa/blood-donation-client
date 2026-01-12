@@ -30,7 +30,6 @@ const Testimonials = () => {
 
                 {/* Section Header */}
                 <div className="text-center mb-14">
-
                     <h2
                         className="text-3xl md:text-4xl font-bold"
                         style={{ color: "#D32F2F" }}

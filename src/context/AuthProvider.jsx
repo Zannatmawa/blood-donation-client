@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { AuthContext } from './AuthContext'
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth'
-import { auth } from '../firebase/firebase.init'
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth'
+import { auth, googleProvider } from '../firebase/firebase.init'
+import { setPersistence, browserLocalPersistence } from "firebase/auth";
 
+setPersistence(auth, browserLocalPersistence);
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true)
@@ -15,6 +17,13 @@ const AuthProvider = ({ children }) => {
     const loginUser = (email, password) => {
         return signInWithEmailAndPassword(auth, email, password);
     }
+    //auto
+    setPersistence(auth, browserLocalPersistence);
+
+    //google sign in
+    const googleLogin = () => {
+        return signInWithPopup(auth, googleProvider);
+    };
     //logout
     const logOut = () => {
         setLoading(true);
@@ -38,6 +47,7 @@ const AuthProvider = ({ children }) => {
     const authInfo = {
         registerUser,
         loginUser,
+        googleLogin,
         logOut,
         user,
         setUser,

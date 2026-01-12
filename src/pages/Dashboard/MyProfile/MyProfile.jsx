@@ -98,17 +98,22 @@ const MyProfile = () => {
 
 
     return (
-        <div className="max-w-3xl mx-auto p-6 shadow rounded bg-white">
-            <button onClick={handleEditProfile} className="btn btn-primary text-black">
-                Edit
-            </button>
+        <div className="max-w-3xl mx-auto p-8 shadow-2xl rounded-2xl bg-white">
+            <div className="flex justify-end mb-6">
+                <button
+                    onClick={handleEditProfile}
+                    className="btn btn-primary text-white bg-red-600 hover:bg-red-700 transition"
+                >
+                    Edit
+                </button>
+            </div>
 
-            <h2 className="text-4xl font-bold text-center mb-6">My Profile</h2>
+            <h2 className="text-4xl font-bold text-center text-red-600 mb-8">My Profile</h2>
 
-            <div className="flex justify-center mb-6">
+            <div className="flex justify-center mb-8">
                 <img
                     src={user?.photoURL || "https://i.ibb.co/Y2q5FJr/default-avatar.png"}
-                    className="w-24 h-24 rounded-full border"
+                    className="w-28 h-28 rounded-full border-4 border-red-200 shadow-lg"
                 />
             </div>
 
@@ -117,24 +122,30 @@ const MyProfile = () => {
                     type="text"
                     disabled={!isEditing}
                     {...register('name')}
-                    className="input w-full"
+                    className="input w-full border-red-300 focus:ring-2 focus:ring-red-500 rounded-lg shadow-sm"
+                    placeholder="Full Name"
                 />
 
                 <input
                     type="email"
                     readOnly
                     {...register('email')}
-                    className="input w-full"
+                    className="input w-full border-gray-300 bg-gray-100 rounded-lg shadow-sm"
+                    placeholder="Email Address"
                 />
 
                 <input
                     type="file"
                     disabled={!isEditing}
                     {...register('photo')}
-                    className="file-input w-full"
+                    className="file-input w-full file:border-red-500 file:text-red-600 file:bg-red-100 file:hover:bg-red-200 rounded-lg"
                 />
 
-                <select disabled={!isEditing} {...register('blood')} className="select w-full">
+                <select
+                    disabled={!isEditing}
+                    {...register('blood')}
+                    className="select w-full border-red-300 focus:ring-2 focus:ring-red-500 rounded-lg shadow-sm"
+                >
                     <option value="">Select Blood Group</option>
                     {bloodGroups.map(bg => (
                         <option key={bg} value={bg}>{bg}</option>
@@ -145,7 +156,7 @@ const MyProfile = () => {
                     disabled={!isEditing}
                     {...register('district')}
                     onChange={e => setDistrictId(e.target.value)}
-                    className="select w-full"
+                    className="select w-full border-red-300 focus:ring-2 focus:ring-red-500 rounded-lg shadow-sm"
                 >
                     <option value="">Pick a District</option>
                     {districts.map(d => (
@@ -153,8 +164,12 @@ const MyProfile = () => {
                     ))}
                 </select>
 
-                <select disabled={!isEditing} {...register('upazilla')} className="select w-full">
-                    <option value="">Pick a Upazilla</option>
+                <select
+                    disabled={!isEditing}
+                    {...register('upazilla')}
+                    className="select w-full border-red-300 focus:ring-2 focus:ring-red-500 rounded-lg shadow-sm"
+                >
+                    <option value="">Pick an Upazilla</option>
                     {upazillas
                         .filter(u => u.district_id == districtId)
                         .map(u => (
@@ -163,12 +178,16 @@ const MyProfile = () => {
                 </select>
 
                 {isEditing && (
-                    <button type="submit" className="btn bg-green-600 text-black">
+                    <button
+                        type="submit"
+                        className="btn w-full bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-md transition"
+                    >
                         Save
                     </button>
                 )}
             </form>
         </div>
+
     )
 }
 

@@ -3,6 +3,10 @@ import {
     Home,
     User,
     HeartPulse,
+    UserCircle,
+    PlusCircle,
+    Users,
+    Settings2,
     ClipboardList,
     Settings,
     LogOut,
@@ -31,10 +35,8 @@ export default function Sidebar() {
     return (
         <div className="flex">
 
-            {/* Sidebar */}
             <div className={`${open ? "w-64" : "w-20"} bg-red-600 min-h-screen p-5 pt-8 transition-all duration-300 text-white relative`}>
 
-                {/* Toggle Button */}
                 <button
                     onClick={() => setOpen(!open)}
                     className="absolute -right-3 top-9 bg-white text-red-600 rounded-full p-1 shadow-md"
@@ -42,55 +44,59 @@ export default function Sidebar() {
                     <Menu size={20} />
                 </button>
 
-                {/* Brand */}
                 <h1 className={`${open ? "text-2xl" : "text-xl"} font-bold text-white mb-10`}>
                     {open ? <Link to="/">Blood Bridge</Link> : "BB"}
                 </h1>
 
-                {/* Menu List */}
                 <ul className="space-y-4 text-sm">
 
                     <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
                         <Home size={20} /> <span className={open ? "block" : "hidden"}><Link to="/dashboard">Dashboard</Link></span>
                     </li>
-                    {/*everyone  */}
+
                     <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
-                        <User size={20} /> <span className={open ? "block" : "hidden"}><Link to='/dashboard/my-profile'>My Profile</Link></span>
+                        <UserCircle size={20} /> <span className={open ? "block" : "hidden"}><Link to='/dashboard/my-profile'>My Profile</Link></span>
                     </li>
+
                     <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
-                        <ClipboardList size={20} /> <span className={open ? "block" : "hidden"}><Link to='/dashboard/create-donation-req'>Create Donation request</Link></span>
+                        <PlusCircle size={20} /> <span className={open ? "block" : "hidden"}><Link to='/dashboard/create-donation-req'>Create Donation Request</Link></span>
                     </li>
+
                     <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
-                        <User size={20} /> <span className={open ? "block" : "hidden"}><Link to='/dashboard/my-dontaion-req'>My Donation request</Link></span>
+                        <ClipboardList size={20} /> <span className={open ? "block" : "hidden"}><Link to='/dashboard/my-dontaion-req'>My Donation Requests</Link></span>
                     </li>
+
                     {role === 'admin' && <>
                         <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
-                            <User size={20} /> <span className={open ? "block" : "hidden"}><Link to='/dashboard/all-users-info'>All users Info</Link></span>
-                        </li>  {/* //for admin only */}
+                            <Users size={20} /> <span className={open ? "block" : "hidden"}><Link to='/dashboard/all-users-info'>All Users Info</Link></span>
+                        </li>
 
                         <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
-                            <HeartPulse size={20} />
-                            <span className={open ? "block" : "hidden"}><Link to='/dashboard/all-donation-req'>All Blood Donation Requests</Link></span>
+                            <HeartPulse size={20} /> <span className={open ? "block" : "hidden"}><Link to='/dashboard/all-donation-req'>All Blood Donation Requests</Link></span>
                         </li>
                     </>}
-                    {role === 'volunteer' && <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
-                        <HeartPulse size={20} />
-                        <span className={open ? "block" : "hidden"}><Link to='/dashboard/all-donation-req'>All Blood Donation Requests</Link></span>
-                    </li>}
-                    {/* //for admin and vol */}
+
+                    {role === 'volunteer' &&
+                        <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
+                            <HeartPulse size={20} /> <span className={open ? "block" : "hidden"}><Link to='/dashboard/all-donation-req'>All Blood Donation Requests</Link></span>
+                        </li>
+                    }
 
                     <li className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
-                        <Settings size={20} />
-                        <span className={open ? "block" : "hidden"}>Settings</span>
+                        <Settings2 size={20} /> <span className={open ? "block" : "hidden"}>Settings</span>
                     </li>
 
                 </ul>
 
-                {/* Logout */}
                 <div className="absolute bottom-8 w-full">
                     <div className="flex items-center gap-4 hover:bg-red-500 p-2 rounded-lg cursor-pointer">
                         <LogOut size={20} />
-                        <Link onClick={`handleLogOut} className="btn bg-red-600 text-white ${open ? " block" : "hidden"}`}>Logout</Link>
+                        <button
+                            onClick={handleLogOut}
+                            className={`bg-red-600 text-white px-3 py-1 rounded ${open ? "block" : "hidden"}`}
+                        >
+                            Logout
+                        </button>
                     </div>
                 </div>
 

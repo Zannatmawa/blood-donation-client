@@ -5,6 +5,7 @@ import { getAuth } from "firebase/auth";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+import { GoogleAuthProvider } from "firebase/auth";
 
 
 const firebaseConfig = {
@@ -19,5 +20,7 @@ const firebaseConfig = {
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth();
+export const googleProvider = new GoogleAuthProvider();
+
 //@Marufa362
 //marufa@gmail.com
