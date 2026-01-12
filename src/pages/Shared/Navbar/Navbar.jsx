@@ -2,6 +2,7 @@ import React from 'react'
 import { Link, NavLink, useNavigate } from 'react-router'
 import Logo from '../../../components/Logo/Logo'
 import useAuth from '../../../hooks/useAuth'
+import DarkModeToggle from '../../../components/DarkMode'
 
 const Navbar = () => {
     const { user, logOut } = useAuth()
@@ -12,12 +13,67 @@ const Navbar = () => {
     }
 
     const links = <>
-        <NavLink className="mr-5" to="/">Home</NavLink>
-        <NavLink className="mr-5" to="/pending-donation-requests">Blood Donation Requests</NavLink>
-        <NavLink className="mr-5" to="/funding">Funding</NavLink>
-        <NavLink className="mr-5" to="/articles">Articles</NavLink>
-        <NavLink className="mr-5" to="/services">Services</NavLink>
-    </>
+        <NavLink
+            to="/"
+            className={({ isActive }) =>
+                `mr-5 px-2 py-1 rounded ${isActive
+                    ? "bg-red-600 text-white dark:bg-red-500"
+                    : "text-gray-800 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400"
+                }`
+            }
+        >
+            Home
+        </NavLink>
+
+        <NavLink
+            to="/pending-donation-requests"
+            className={({ isActive }) =>
+                `mr-5 px-2 py-1 rounded ${isActive
+                    ? "bg-red-600 text-white dark:bg-red-500"
+                    : "text-gray-800 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400"
+                }`
+            }
+        >
+            Blood Donation Requests
+        </NavLink>
+
+        <NavLink
+            to="/funding"
+            className={({ isActive }) =>
+                `mr-5 px-2 py-1 rounded ${isActive
+                    ? "bg-red-600 text-white dark:bg-red-500"
+                    : "text-gray-800 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400"
+                }`
+            }
+        >
+            Funding
+        </NavLink>
+
+        <NavLink
+            to="/articles"
+            className={({ isActive }) =>
+                `mr-5 px-2 py-1 rounded ${isActive
+                    ? "bg-red-600 text-white dark:bg-red-500"
+                    : "text-gray-800 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400"
+                }`
+            }
+        >
+            Articles
+        </NavLink>
+
+        <NavLink
+            to="/services"
+            className={({ isActive }) =>
+                `mr-5 px-2 py-1 rounded ${isActive
+                    ? "bg-red-600 text-white dark:bg-red-500"
+                    : "text-gray-800 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400"
+                }`
+            }
+        >
+            Services
+        </NavLink>
+    </>;
+
 
     return (
         <div className="sticky top-0 z-50 bg-base-200 shadow-md">
@@ -46,7 +102,7 @@ const Navbar = () => {
 
                 <div className="navbar-end">
                     {user ? (
-                        <div className="dropdown dropdown-end">
+                        <div className="dropdown dropdown-end ml-4">
                             <img
                                 tabIndex={0}
                                 role="button"

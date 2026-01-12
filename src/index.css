@@ -10,11 +10,34 @@
     --color-secondary: #03373D;
 }
 
+/* Light Theme (existing) */
+:root {
+    --color-primary: #D32F2F;
+    --color-secondary: #03373D;
+    --bg-color: #ffffff;
+    --text-color: #1f2937;
+    /* Tailwind gray-900 */
+}
+
+/* Dark Theme */
+.dark {
+    --color-primary: #ef4444;
+    /* slightly brighter red for dark bg */
+    --color-secondary: #0f4c5c;
+    --bg-color: #111827;
+    /* Tailwind gray-900 */
+    --text-color: #f9fafb;
+    /* Tailwind gray-50 */
+}
+
+/* Apply the variables */
 body {
     font-family: "Urbanist", sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
+
 
 @keyframes float {
     0% {
