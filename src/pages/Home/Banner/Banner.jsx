@@ -44,7 +44,7 @@ const Banner = () => {
                     {/* Stats */}
 
                     {/* Stats */}
-                    <div className="mt-10 grid grid-cols-3 gap-4 max-w-xs mx-auto md:mx-0">
+                    {/* <div className="mt-10 grid grid-cols-3 gap-4 max-w-xs mx-auto md:mx-0">
                         <div className="text-center">
                             <h3 className="text-2xl font-bold text-red-600">
                                 <CountUp end={1200} duration={2.5} />+
@@ -65,6 +65,29 @@ const Banner = () => {
                             </h3>
                             <p className="text-gray-600 text-sm">Service (Hours)</p>
                         </div>
+                    </div> */}
+                    {/* Stats with Glassmorphism */}
+                    <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-lg">
+                        {[
+                            { end: 1200, label: "Active Donors", duration: 2.5 },
+                            { end: 500, label: "Donations", duration: 2.5 },
+                            { end: 24, label: "Service (Hours)", duration: 2 }
+                        ].map((stat, index) => (
+                            <div
+                                key={index}
+                                className="relative group p-4 rounded-2xl bg-white/40 backdrop-blur-md border border-white/60 shadow-lg hover:shadow-xl transition-all duration-300 text-center"
+                            >
+                                <h3 className="text-2xl font-extrabold text-red-600">
+                                    <CountUp end={stat.end} duration={stat.duration} />
+                                    {stat.end > 100 && "+"}
+                                </h3>
+                                <p className="text-gray-600 text-xs uppercase tracking-wider font-medium">
+                                    {stat.label}
+                                </p>
+                                {/* Subtle hover accent */}
+                                <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-red-100 transition-colors pointer-events-none"></div>
+                            </div>
+                        ))}
                     </div>
 
                 </div>
