@@ -4,6 +4,7 @@ import useAuth from '../../../hooks/useAuth'
 import axios from 'axios';
 import { Link, useLoaderData, useLocation, useNavigate } from 'react-router';
 import useAxios from '../../../hooks/useAxios';
+//@Saima362 @Namm362 na@gmail.com
 const Register = () => {
     const axiosSecure = useAxios();
     const { registerUser, updateUserProfile } = useAuth();
