@@ -2,7 +2,7 @@ import React from 'react'
 import Banner from './Banner/Banner'
 import ContactSection from './ContactUs/ContactUs'
 import FAQ from './FaqSection/FaqSection'
-import FeaturedArticles from './Articles/Articles'
+// import FeaturedArticles from './Articles/Articles'
 import useTitle from '../../components/UseTitle'
 import Partners from './Partners/Partners'
 import StatsSection from './StatsSection/StatsSection'
@@ -16,7 +16,7 @@ const Home = () => {
     return (
         <div>
             <Banner />
-            <FeaturedArticles />
+            {/* <FeaturedArticles /> */}
             <Categories />
             <Services />
             <HowItWorks />
